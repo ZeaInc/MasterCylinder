@@ -64,7 +64,7 @@ import setupIdentification from './setupIdentification.js'
 import setupSimulator from './setupSimulator.js'
 import setupAssembly from './setupAssembly.js'
 
-asset.on('loaded', () => {
+asset.once('loaded', () => {
   renderer.frameAll()
   // const xfo = renderer.getViewport().getCamera().getGlobalXfo()
   // const target = renderer.getViewport().getCamera().getTargetPostion()
@@ -75,27 +75,25 @@ asset.on('loaded', () => {
 
   const appData = {}
 
-  asset.on('loaded', () => {
-    const stage = urlParams.get('stage')
-    switch (stage) {
-      case 'learning': {
-        setupLearning(scene, asset, renderer, appData)
-        break
-      }
-      case 'identification': {
-        setupIdentification(scene, asset, renderer, appData)
-        break
-      }
-      case 'simulation': {
-        setupSimulator(scene, asset, renderer, appData)
-        break
-      }
-      case 'assembly': {
-        setupAssembly(scene, asset, renderer, appData)
-        break
-      }
+  const stage = urlParams.get('stage')
+  switch (stage) {
+    case 'learning': {
+      setupLearning(scene, asset, renderer, appData)
+      break
     }
-  })
+    case 'identification': {
+      setupIdentification(scene, asset, renderer, appData)
+      break
+    }
+    case 'simulation': {
+      setupSimulator(scene, asset, renderer, appData)
+      break
+    }
+    case 'assembly': {
+      setupAssembly(scene, asset, renderer, appData)
+      break
+    }
+  }
 })
 // if (document.location.hostname == 'localhost') {
 //   let currSel

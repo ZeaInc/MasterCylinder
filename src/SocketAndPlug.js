@@ -146,7 +146,7 @@ class PlugItem extends Group {
     super(name)
 
     // we explicitly position the socket
-    // this.getParameter('InitialXfoMode').setValue(Group.INITIAL_XFO_MODES.manual)
+    this.getParameter('InitialXfoMode').setValue(Group.INITIAL_XFO_MODES.manual)
 
     this.sockets = []
     this.pairedSocket

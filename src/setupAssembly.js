@@ -2,7 +2,7 @@
 import { SocketItem, PlugItem, PlugMode } from './SocketAndPlug.js'
 import { PlanarMovementHandle } from '../libs/zea-ux/dist/index.rawimport.js'
 
-const displayDebug = true
+const displayDebug = false
 function setupPlugAndSocket(
   asset,
   name,
@@ -98,6 +98,9 @@ function setupAssembly(scene, asset, renderer, appData) {
     ['.', 'haste_vacuo'],
     ['.', 'bucha_vedada'], // Push Plate end of booster rod
     ['.', 'prato.1'],
+    ['.', 'SJ Cilindro MESTRE.1', 'porca_m6.1', 'porca_m6'],
+    ['.', 'SJ Cilindro MESTRE.1', 'porca_m6'],
+    ['.', 'SJ Cilindro MESTRE.1', 'Part1.11'],
     // ['.', 'paraf_m6.1'],
     // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
     // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
@@ -216,8 +219,6 @@ function setupAssembly(scene, asset, renderer, appData) {
       )
       plugs.fluidReservoir = data
     }
-
-    /*
 
     {
       const xfo = new Xfo()
@@ -473,7 +474,7 @@ function setupAssembly(scene, asset, renderer, appData) {
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.secondaryPistonEndSeal.socket)
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.secondaryPistonRamSeal.socket)
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.primaryPistonEndSeal.socket)
-*/
+
     let plugsPositions = [
       new Vec3(0.0, -0.2, 0.2),
       new Vec3(0.0, -0.2, 0.1),
