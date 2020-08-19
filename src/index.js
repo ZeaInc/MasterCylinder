@@ -75,27 +75,27 @@ asset.on('loaded', () => {
 
   const appData = {}
 
-  // asset.on('loaded', () => {
-  //   const stage = urlParams.get('stage')
-  //   switch (stage) {
-  //     case 'learning': {
-  setupLearning(scene, asset, renderer, appData)
-  //       break
-  //     }
-  //     case 'identification': {
-  // setupIdentification(scene, asset, renderer, appData)
-  //       break
-  //     }
-  //     case 'simulation': {
-  // setupSimulator(scene, asset, renderer, appData)
-  //       break
-  //     }
-  //     case 'assembly': {
-  // setupAssembly(scene, asset, renderer, appData)
-  //       break
-  //     }
-  //   }
-  // })
+  asset.on('loaded', () => {
+    const stage = urlParams.get('stage')
+    switch (stage) {
+      case 'learning': {
+        setupLearning(scene, asset, renderer, appData)
+        break
+      }
+      case 'identification': {
+        setupIdentification(scene, asset, renderer, appData)
+        break
+      }
+      case 'simulation': {
+        setupSimulator(scene, asset, renderer, appData)
+        break
+      }
+      case 'assembly': {
+        setupAssembly(scene, asset, renderer, appData)
+        break
+      }
+    }
+  })
 })
 // if (document.location.hostname == 'localhost') {
 //   let currSel

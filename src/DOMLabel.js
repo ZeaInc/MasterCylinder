@@ -113,9 +113,10 @@ class DOMLabel extends DataImage {
           try {
             const name = this.getName()
             // console.log("Text Loaded:" + name);
-            const labelData = labelManager.getLabelText(library, name)
-            this.getParameter('Header').setValue(labelData.Header)
-            if (labelData.Text) this.getParameter('Text').setValue(labelData.Text)
+            const labelText = labelManager.getLabelText(library, name)
+            this.getParameter('Header').setValue(labelText)
+            const detailText = labelManager.getLabelText(library, name + '-detail')
+            if (detailText) this.getParameter('Text').setValue(detailText)
           } catch (e) {
             // Note: if the text is not found in the labels pack
             // an exception is thrown, and we catch it here.
