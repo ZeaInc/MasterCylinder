@@ -41,7 +41,7 @@ const language = urlParams.get('language')
 if (language) {
   labelManager.setLanguage(language)
 }
-labelManager.loadLibrary('servo_mestre.labels', './data/servo_mestre.labels')
+labelManager.loadLibrary('servo_mestre.labels', 'data/servo_mestre.labels')
 
 const position = new Vec3({ x: 0.86471, y: 0.87384, z: 0.18464 })
 const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
@@ -49,7 +49,7 @@ renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 scene.getSettings().getParameter('BackgroundColor').setValue(new Color(0.8, 0.8, 0.8))
 
 const envMap = new EnvMap('envMap')
-envMap.getParameter('FilePath').setFilepath('./data/HDR_029_Sky_Cloudy_Ref.vlenv')
+envMap.getParameter('FilePath').setValue('data/HDR_029_Sky_Cloudy_Ref.vlenv')
 scene.setEnvMap(envMap)
 // renderer.displayEnvironment = false
 
