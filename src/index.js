@@ -41,7 +41,7 @@ const language = urlParams.get('language')
 if (language) {
   labelManager.setLanguage(language)
 }
-labelManager.loadLibrary('servo_mestre.labels', 'data/servo_mestre.labels')
+labelManager.loadLibrary('servo_mestre.xlsx', 'data/servo_mestre.xlsx')
 
 const position = new Vec3({ x: 0.86471, y: 0.87384, z: 0.18464 })
 const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })

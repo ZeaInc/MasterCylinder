@@ -115,12 +115,16 @@ class DOMLabel extends DataImage {
             // console.log("Text Loaded:" + name);
             const labelText = labelManager.getLabelText(library, name)
             this.getParameter('Header').setValue(labelText)
-            const detailText = labelManager.getLabelText(library, name + '-detail')
-            if (detailText) this.getParameter('Text').setValue(detailText)
           } catch (e) {
             // Note: if the text is not found in the labels pack
             // an exception is thrown, and we catch it here.
             console.warn(e)
+          }
+          try {
+            const detailText = labelManager.getLabelText(library, name + '-detail')
+            if (detailText) this.getParameter('Text').setValue(detailText)
+          } catch (e) {
+            // Note: if the detail text is not found in the labels pack, do error.
           }
           resolve()
         }
@@ -270,7 +274,7 @@ function createLabelAndLine(labelData) {
     const line = new Lines()
     line.setNumVertices(2)
     line.setNumSegments(1)
-    line.setSegment(0, 0, 1)
+    line.setSegmentVertexIndices(0, 0, 1)
     line.getVertexAttribute('positions').getValueRef(1).setFromOther(new Vec3(1, 0, 0))
     state.line = line
   }

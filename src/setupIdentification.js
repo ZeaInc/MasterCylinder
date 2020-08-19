@@ -37,12 +37,12 @@ function setupIdentification(scene, asset, renderer, appData) {
 
   const offset = new Vec3(0, 0, 0.1)
   createLabels([
-    { basePos: new Vec3(0, 0.3, 0.2), offset, name: 'ResovoirS', width: 200 },
-    { basePos: new Vec3(0.0, 0.2, 0.2), offset, name: 'PrimaryPistonS', width: 200 },
-    { basePos: new Vec3(0.0, 0.1, 0.2), offset, name: 'SecondaryPistonS', width: 200 },
-    { basePos: new Vec3(0.0, 0, 0.2), offset, name: 'SealS', width: 200 },
-    { basePos: new Vec3(0.0, -0.1, 0.2), offset, name: 'PrimaryReturnSpringS', width: 200 },
-    { basePos: new Vec3(0.0, -0.2, 0.2), offset, name: 'SecondaryReturnSpringS', width: 200 },
+    { basePos: new Vec3(0, 0.3, 0.2), offset, name: 'Resovoir', width: 200 },
+    { basePos: new Vec3(0.0, 0.2, 0.2), offset, name: 'PrimaryPiston', width: 200 },
+    { basePos: new Vec3(0.0, 0.1, 0.2), offset, name: 'SecondaryPiston', width: 200 },
+    { basePos: new Vec3(0.0, 0, 0.2), offset, name: 'Seal', width: 200 },
+    { basePos: new Vec3(0.0, -0.1, 0.2), offset, name: 'PrimaryReturnSpring', width: 200 },
+    { basePos: new Vec3(0.0, -0.2, 0.2), offset, name: 'SecondaryReturnSpring', width: 200 },
   ])
 
   //////////////////////////////////////////////////////////////
