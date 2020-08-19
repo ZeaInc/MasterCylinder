@@ -1,4 +1,11 @@
-import { GeomItem, Cross, Material, NumberParameter } from '../libs/zea-engine/dist/index.esm.js'
+import {
+  GeomItem,
+  Cross,
+  Material,
+  NumberParameter,
+  Color,
+  BooleanParameter,
+} from '../libs/zea-engine/dist/index.esm.js'
 
 let cross
 class LocatorItem extends GeomItem {
@@ -6,8 +13,17 @@ class LocatorItem extends GeomItem {
     if (!cross) {
       cross = new Cross()
     }
-    const material = new Material('LocatorMaterial', 'LinesShader')
-    if (color) material.getParameter('BaseColor').setValue(color)
+
+    let material
+    if (color) {
+      if (color instanceof Color) {
+        material = new Material('LocatorMaterial', 'LinesShader')
+        material.getParameter('BaseColor').setValue(color)
+      } else if (color instanceof Material) {
+        material = color
+      }
+    }
+
     super(name, cross, material)
 
     const sizeParam = this.addParameter(new NumberParameter('Size', size))
@@ -20,6 +36,26 @@ class LocatorItem extends GeomItem {
     }
     sizeParam.on('valueChanged', resize)
     resize()
+
+    this.addParameter(new BooleanParameter('PropagateVisibilityToChildren', false)).on('valueChanged', () => {
+      this.propagateVisibilityToChildren = this.getParameter('PropagateVisibilityToChildren').getValue()
+    })
+    this.propagateVisibilityToChildren = false
+  }
+
+  __updateVisibility() {
+    const visible = this.__visibleCounter > 0
+    if (visible != this.__visible) {
+      this.__visible = visible
+      if (this.propagateVisibilityToChildren) {
+        for (const childItem of this.__childItems) {
+          if (childItem instanceof TreeItem) childItem.propagateVisibility(this.__visible ? 1 : -1)
+        }
+      }
+      this.emit('visibilityChanged', { visible })
+      return true
+    }
+    return false
   }
 }
 

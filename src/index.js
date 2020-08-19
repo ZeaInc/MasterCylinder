@@ -62,7 +62,7 @@ scene.root.addChild(asset)
 import setupLearning from './setupLearning.js'
 import setupIdentification from './setupIdentification.js'
 import setupSimulator from './setupSimulator.js'
-// import setupAssembly from './setupAssembly.js'
+import setupAssembly from './setupAssembly.js'
 
 asset.on('loaded', () => {
   renderer.frameAll()
@@ -79,11 +79,11 @@ asset.on('loaded', () => {
   //   const stage = urlParams.get('stage')
   //   switch (stage) {
   //     case 'learning': {
-  // setupLearning(scene, asset, renderer, appData)
+  setupLearning(scene, asset, renderer, appData)
   //       break
   //     }
   //     case 'identification': {
-  setupIdentification(scene, asset, renderer, appData)
+  // setupIdentification(scene, asset, renderer, appData)
   //       break
   //     }
   //     case 'simulation': {
@@ -91,7 +91,7 @@ asset.on('loaded', () => {
   //       break
   //     }
   //     case 'assembly': {
-  //       setupAssembly(scene, asset, renderer, appData)
+  // setupAssembly(scene, asset, renderer, appData)
   //       break
   //     }
   //   }

@@ -166,8 +166,8 @@ function setupLearning(scene, asset, renderer) {
     ['.', 'bucha_vedada'], // Push Plate end of booster rod
     ['.', 'prato.1'],
     // ['.', 'paraf_m6.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
+    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
   ])
   // })
 
@@ -267,18 +267,18 @@ function setupLearning(scene, asset, renderer) {
     part.getParameter('Axis').setValue(explodeBackSideDir)
     part.getParameter('Stage').setValue(11)
   }
-  // {
-  //   const part = parts.addElement()
-  //   part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'tampa_tanque', 'GlobalXfo']))
-  //   part.getParameter('Axis').setValue(explodeTopDir)
-  //   part.getParameter('Stage').setValue(9)
-  // }
-  // {
-  //   const part = parts.addElement()
-  //   part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'tanque_fluido', 'GlobalXfo']))
-  //   part.getParameter('Axis').setValue(explodeTopDir)
-  //   part.getParameter('Stage').setValue(11)
-  // }
+  {
+    const part = parts.addElement()
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.13', 'GlobalXfo']))
+    part.getParameter('Axis').setValue(explodeTopDir)
+    part.getParameter('Stage').setValue(9)
+  }
+  {
+    const part = parts.addElement()
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'tanque_fluido.1', 'GlobalXfo']))
+    part.getParameter('Axis').setValue(explodeTopDir)
+    part.getParameter('Stage').setValue(11)
+  }
   {
     const part = parts.addElement()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundario', 'GlobalXfo']))

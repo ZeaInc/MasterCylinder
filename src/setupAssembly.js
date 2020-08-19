@@ -1,4 +1,8 @@
-﻿const displayDebug = false
+﻿import { Vec3, Color, Xfo, Group } from '../libs/zea-engine/dist/index.esm.js'
+import { SocketItem, PlugItem, PlugMode } from './SocketAndPlug.js'
+import { PlanarMovementHandle } from '../libs/zea-ux/dist/index.rawimport.js'
+
+const displayDebug = true
 function setupPlugAndSocket(
   asset,
   name,
@@ -12,7 +16,7 @@ function setupPlugAndSocket(
   dependentSockets,
   parent
 ) {
-  const socket = new SocketAndPlug.SocketItem(name, displayDebug)
+  const socket = new SocketItem(name, displayDebug)
   socket.getParameter('GlobalXfo').setValue(xfo)
   socket.getParameter('Size').setValue(radius * 5)
   socket.getParameter('Radius').setValue(radius)
@@ -30,7 +34,7 @@ function setupPlugAndSocket(
   if (parent) parent.addChild(socket)
   else asset.addChild(socket)
 
-  const plug = new SocketAndPlug.PlugItem(name + 'Plug', displayDebug)
+  const plug = new PlugItem(name + 'Plug', displayDebug)
   plug.getParameter('Size').setValue(radius * 5)
   plug.getParameter('Length').setValue(plugLength)
   const plugXfo = xfo.clone()
@@ -39,15 +43,15 @@ function setupPlugAndSocket(
   plug.sockets.push(socket)
   // asset.addChild(plug);
 
-  const dir = new ZeaEngine.Vec3(1, 0, 0)
-  const up = new ZeaEngine.Vec3(0, 0, 1)
-  const handle = new appData.UX.PlanarMovementHandle()
+  const dir = new Vec3(1, 0, 0)
+  const up = new Vec3(0, 0, 1)
+  const handle = new PlanarMovementHandle()
   const handleXfo = xfo.clone()
   handleXfo.ori.setFromDirectionAndUpvector(dir, up)
-  handle.setLocalXfo(handleXfo)
+  handle.getParameter('LocalXfo').setValue(handleXfo)
   handle.addChild(plug, true)
 
-  // const handle = new appData.UX.ScreenSpaceMovementHandle();
+  // const handle = new ScreenSpaceMovementHandle();
   // handle.setGlobalXfo(plug.getGlobalXfo())
   // handle.addChild(plug, true);
   // handle.setTargetParam(plug.getParameter("GlobalXfo"), false)
@@ -58,64 +62,70 @@ function setupPlugAndSocket(
 }
 
 function setupAssembly(scene, asset, renderer, appData) {
-  // renderer.getViewport().getCamera().globalXfoChanged.connect(()=>{
+  // renderer.getViewport().getCamera().on('globalXfoChanged', ()=>{
   //   const xfo = renderer.getViewport().getCamera().getGlobalXfo()
   //   const target = renderer.getViewport().getCamera().getTargetPostion()
   //   console.log(xfo.toString(), target.toString())
   // })
-  const position = new ZeaEngine.Vec3({ x: 0.91666, y: -0.05792, z: 0.12469 })
-  const target = new ZeaEngine.Vec3({ x: 0.02931, y: -0.12152, z: 0.04089 })
+  const position = new Vec3({ x: 0.91666, y: -0.05792, z: 0.12469 })
+  const target = new Vec3({ x: 0.02931, y: -0.12152, z: 0.04089 })
   renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 
-  const boosterAndPedalGroup = new ZeaEngine.Group('boosterAndPedalGroup')
+  const boosterAndPedalGroup = new Group('boosterAndPedalGroup')
   // boosterAndPedalGroup.getParameter('Highlighted').setValue(true);
   boosterAndPedalGroup.getParameter('Visible').setValue(false)
   asset.addChild(boosterAndPedalGroup)
 
-  asset.loaded.connect(() => {
-    boosterAndPedalGroup.resolveItems([
-      ['.', 'bacia_1'],
-      ['.', 'bacia_2'],
-      ['.', 'disco_dinamico'],
-      ['.', 'Part1'],
-      ['.', 'Symmetry of Part1'],
-      ['.', 'Symmetry of Part1.8.2'],
-      ['.', 'Symmetry of Symmetry of Part1'],
-      ['.', 'haste_acionamento'],
-      ['.', 'Pedal_de freio'],
-      ['.', 'mola11'],
-      ['.', 'mola12'],
-      ['.', 'filtro_ar'],
-      ['.', 'bucha_vacuo'],
-      ['.', 'tubo_vacuo'],
-      ['.', 'haste_vacuo'],
-      ['.', 'bucha_vedada'],
-      ['.', 'prato'],
-      ['.', 'paraf_m6'],
-      ['.', 'SJ Cilindro MESTRE', 'porca_m6.1'],
-      ['.', 'Part1.1'],
-      ['.', 'SJ Cilindro MESTRE', 'porca_m6'],
-      ['.', 'SJ Cilindro MESTRE', 'Part1.11'],
-    ])
-  })
+  // asset.on('loaded', () => {
+
+  boosterAndPedalGroup.resolveItems([
+    ['.', 'bacia_1.1'],
+    ['.', 'bacia_2.1'],
+    ['.', 'disco_dinamico'],
+    ['.', 'Part1.1'],
+    ['.', 'Part1.6'],
+    ['.', 'Part1.8'],
+    ['.', 'Symmetry of Part1.8.1'],
+    ['.', 'Symmetry of Part1.8.2'],
+    ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
+    ['.', 'haste_acionamento'],
+    ['.', 'Pedal_de freio.1'],
+    ['.', 'mola11.1'],
+    ['.', 'mola12.1'],
+    ['.', 'filtro_ar'],
+    ['.', 'bucha_vacuo.1'],
+    ['.', 'tubo_vacuo.1'],
+    ['.', 'haste_vacuo'],
+    ['.', 'bucha_vedada'], // Push Plate end of booster rod
+    ['.', 'prato.1'],
+    // ['.', 'paraf_m6.1'],
+    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
+    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+  ])
+
+  // })
 
   // const applyCutaway = false
   // if (applyCutaway) {
-  asset.getParameter('CutPlaneColor').setValue(new ZeaEngine.Color(0, 0, 0))
-  asset.getParameter('CutPlaneNormal').setValue(new ZeaEngine.Vec3(1, 0, 0))
-  const cutAwayGroup = new ZeaEngine.Group('cutAwayGroup')
-  asset.getParameter('CutPlaneDist').setValue(-0.2)
+  const cutAwayGroup = new Group('cutAwayGroup')
+  cutAwayGroup.getParameter('CutPlaneNormal').setValue(new Vec3(1, 0, 0))
+  cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
   asset.addChild(cutAwayGroup)
 
   cutAwayGroup.resolveItems([
-    ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre'],
-    ['.', 'SJ Cilindro MESTRE', 'bucha_freio'],
-    ['.', 'SJ Cilindro MESTRE', '1.1'],
-    ['.', 'SJ Cilindro MESTRE', '1.2'],
-    ['.', 'SJ Cilindro MESTRE', '1.3'],
+    // ['.', 'bacia_1.1'],
+    // ['.', 'bacia_2.1'],
+    ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
+    ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+    ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
+    ['.', 'SJ Cilindro MESTRE.1', '1'],
+    ['.', 'SJ Cilindro MESTRE.1', '1.2', '1'],
+    // ['.', 'disco_dinamico'],
+    // ['.', 'Part1.8'],
+    // ['.', 'Symmetry of Part1.8.2'],
   ])
 
-  // cutAwayGroup.getParameter('CutAwayEnabled').setValue(true);
+  cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
   // asset.getParameter('CutPlaneDist').setValue(0.0)
   // }
 
@@ -123,75 +133,77 @@ function setupAssembly(scene, asset, renderer, appData) {
   {
     let masterCylinderGroup
     {
-      masterCylinderGroup = new ZeaEngine.Group('masterCylinderGroup')
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'cilindro_mestre'])
+      masterCylinderGroup = new Group('masterCylinderGroup')
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'cilindro_mestre.1'])
       masterCylinderGroup.addItem(item)
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.1']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.2']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.3']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', 'bucha_freio']))
-      const dir = new ZeaEngine.Vec3(1, 0, 0)
-      const up = new ZeaEngine.Vec3(0, 0, 1)
-      const handle = new appData.UX.PlanarMovementHandle()
-      const handleXfo = new ZeaEngine.Xfo()
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.1']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.2']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.3']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1']))
+      const dir = new Vec3(1, 0, 0)
+      const up = new Vec3(0, 0, 1)
+      const handle = new PlanarMovementHandle()
+      const handleXfo = new Xfo()
       handleXfo.tr = item.getParameter('GlobalXfo').getValue().tr
       handleXfo.ori.setFromDirectionAndUpvector(dir, up)
-      handle.setLocalXfo(handleXfo)
+      handle.getParameter('LocalXfo').setValue(handleXfo)
       handle.addChild(masterCylinderGroup, true)
 
       asset.addChild(handle)
 
       plugs.masterCylinder = { plug: handle }
     }
+    {
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
+      xfo.tr.set(0.0, -0.231, 0.015)
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario'])
+      const data = setupPlugAndSocket(
+        asset,
+        'fluidReservoirPlug1',
+        xfo,
+        0.007,
+        0.015,
+        0,
+        Math.PI * 2,
+        item,
+        appData,
+        [],
+        masterCylinderGroup
+      )
+      plugs.fluidReservoirPlug1 = data
+    }
+    {
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
+      xfo.tr.set(0.0, -0.141, 0.015)
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundario'])
+      const data = setupPlugAndSocket(
+        asset,
+        'fluidReservoirPlug2',
+        xfo,
+        0.007,
+        0.015,
+        0,
+        Math.PI * 2,
+        item,
+        appData,
+        [],
+        masterCylinderGroup
+      )
+      plugs.fluidReservoirPlug2 = data
+    }
+    plugs.fluidReservoirPlug1.plug.addConnectableSocket(plugs.fluidReservoirPlug2.socket)
+    plugs.fluidReservoirPlug2.plug.addConnectableSocket(plugs.fluidReservoirPlug1.socket)
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 0, 1), new ZeaEngine.Vec3(1, 0, 0))
-      xfo.tr.set(0.0, -0.231, 0.015)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Bucha_tanque'])
-      const data = setupPlugAndSocket(
-        asset,
-        'fluidResovoirPlug1',
-        xfo,
-        0.007,
-        0.015,
-        0,
-        Math.PI * 2,
-        item,
-        appData,
-        [],
-        masterCylinderGroup
-      )
-      plugs.fluidResovoirPlug1 = data
-    }
-    {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 0, 1), new ZeaEngine.Vec3(1, 0, 0))
-      xfo.tr.set(0.0, -0.141, 0.015)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundario'])
-      const data = setupPlugAndSocket(
-        asset,
-        'fluidResovoirPlug2',
-        xfo,
-        0.007,
-        0.015,
-        0,
-        Math.PI * 2,
-        item,
-        appData,
-        [],
-        masterCylinderGroup
-      )
-      plugs.fluidResovoirPlug2 = data
-    }
-    {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 0, 1), new ZeaEngine.Vec3(1, 0, 0))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.2, 0.02)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'tanque_fluido'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'tanque_fluido.1'])
       const data = setupPlugAndSocket(
         asset,
-        'fluidResovoir',
+        'fluidReservoir',
         xfo,
         0.007,
         0.01,
@@ -199,25 +211,24 @@ function setupAssembly(scene, asset, renderer, appData) {
         0,
         item,
         appData,
-        [plugs.fluidResovoirPlug1.socket, plugs.fluidResovoirPlug2.socket],
+        [plugs.fluidReservoirPlug1.socket, plugs.fluidReservoirPlug2.socket],
         masterCylinderGroup
       )
-      plugs.fluidResovoir = data
+      plugs.fluidReservoir = data
     }
 
-    plugs.fluidResovoirPlug1.plug.addConnectableSocket(plugs.fluidResovoirPlug2.socket)
-    plugs.fluidResovoirPlug2.plug.addConnectableSocket(plugs.fluidResovoirPlug1.socket)
+    /*
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      const dir = new ZeaEngine.Vec3(0, -0.25, 1)
+      const xfo = new Xfo()
+      const dir = new Vec3(0, -0.25, 1)
       dir.normalizeInPlace()
-      xfo.ori.setFromDirectionAndUpvector(dir, new ZeaEngine.Vec3(1, 0, 0))
+      xfo.ori.setFromDirectionAndUpvector(dir, new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.157, 0.08)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'tampa_tanque'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.13'])
       const data = setupPlugAndSocket(
         asset,
-        'fluidResovoirCap',
+        'fluidReservoirCap',
         xfo,
         0.007,
         0.005,
@@ -226,16 +237,16 @@ function setupAssembly(scene, asset, renderer, appData) {
         item,
         appData,
         [],
-        plugs.fluidResovoir.plug
+        plugs.fluidReservoir.plug
       )
-      plugs.fluidResovoirCap = data
+      plugs.fluidReservoirCap = data
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.288, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'mola1.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola1.1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonSocket',
@@ -253,10 +264,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.2325, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'primario1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonSocket',
@@ -274,10 +285,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, -1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, -1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.229, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'primaria2'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primaria2'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonEndSeal',
@@ -297,10 +308,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.195, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonRamSeal',
@@ -318,10 +329,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.19, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonStartRamSocket',
@@ -339,10 +350,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.188, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'mola2.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola2.1'])
       const data = setupPlugAndSocket(
         asset,
         'primarySpringSocket',
@@ -360,10 +371,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.14, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Secundario'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Secundario'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPiston',
@@ -381,10 +392,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, -1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, -1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.139, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria.1'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPistonEndSeal',
@@ -404,10 +415,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.118, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.9'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.9'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPistonStartSeal',
@@ -426,10 +437,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
 
     {
-      const xfo = new ZeaEngine.Xfo()
-      xfo.ori.setFromDirectionAndUpvector(new ZeaEngine.Vec3(0, 1, 0), new ZeaEngine.Vec3(0, 0, 1))
+      const xfo = new Xfo()
+      xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.114, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Anel Trava'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Anel Trava'])
       const data = setupPlugAndSocket(
         asset,
         'clipSocket',
@@ -462,30 +473,30 @@ function setupAssembly(scene, asset, renderer, appData) {
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.secondaryPistonEndSeal.socket)
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.secondaryPistonRamSeal.socket)
     // plugs.primaryPistonStartSeal.plug.addConnectableSocket(plugs.primaryPistonEndSeal.socket)
-
+*/
     let plugsPositions = [
-      new ZeaEngine.Vec3(0.0, -0.2, 0.2),
-      new ZeaEngine.Vec3(0.0, -0.2, 0.1),
-      new ZeaEngine.Vec3(0.0, -0.2, 0.0),
-      new ZeaEngine.Vec3(0.0, -0.2, -0.1),
-      new ZeaEngine.Vec3(0.0, 0.0, 0.2),
-      new ZeaEngine.Vec3(0.0, 0.0, 0.1),
-      new ZeaEngine.Vec3(0.0, 0.0, 0.0),
-      new ZeaEngine.Vec3(0.0, 0.0, -0.1),
-      new ZeaEngine.Vec3(0.0, -0.1, 0.2),
-      new ZeaEngine.Vec3(0.0, -0.1, 0.1),
-      new ZeaEngine.Vec3(0.0, -0.1, 0.0),
-      new ZeaEngine.Vec3(0.0, -0.1, -0.1),
-      new ZeaEngine.Vec3(0.0, 0.1, 0.2),
-      new ZeaEngine.Vec3(0.0, 0.1, 0.1),
-      new ZeaEngine.Vec3(0.0, 0.1, 0.0),
-      new ZeaEngine.Vec3(0.0, 0.1, -0.1),
+      new Vec3(0.0, -0.2, 0.2),
+      new Vec3(0.0, -0.2, 0.1),
+      new Vec3(0.0, -0.2, 0.0),
+      new Vec3(0.0, -0.2, -0.1),
+      new Vec3(0.0, 0.0, 0.2),
+      new Vec3(0.0, 0.0, 0.1),
+      new Vec3(0.0, 0.0, 0.0),
+      new Vec3(0.0, 0.0, -0.1),
+      new Vec3(0.0, -0.1, 0.2),
+      new Vec3(0.0, -0.1, 0.1),
+      new Vec3(0.0, -0.1, 0.0),
+      new Vec3(0.0, -0.1, -0.1),
+      new Vec3(0.0, 0.1, 0.2),
+      new Vec3(0.0, 0.1, 0.1),
+      new Vec3(0.0, 0.1, 0.0),
+      new Vec3(0.0, 0.1, -0.1),
     ]
     const hilightAllPlugs = (duration) => {
-      const color = new ZeaEngine.Color(0, 1, 0, 0.25)
+      const color = new Color(0, 1, 0, 0.25)
       for (let key in plugs) {
         const p = plugs[key].plug
-        if (p instanceof SocketAndPlug.PlugItem) {
+        if (p instanceof PlugItem) {
           p.getParameter('HighlightColor').setValue(color)
           p.getParameter('HighlightFill').setValue(color.a)
           p.getParameter('Highlighted').setValue(true)
@@ -495,7 +506,7 @@ function setupAssembly(scene, asset, renderer, appData) {
         setTimeout(() => {
           for (let key in plugs) {
             const p = plugs[key].plug
-            if (p instanceof SocketAndPlug.PlugItem) {
+            if (p instanceof PlugItem) {
               p.getParameter('Highlighted').setValue(false)
             }
           }
@@ -505,14 +516,14 @@ function setupAssembly(scene, asset, renderer, appData) {
     // hilightAllPlugs(1000);
     const applyCutaway = (delay) => {
       cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
-      const cutDist = asset.getParameter('CutPlaneDist')
+      const cutDist = cutAwayGroup.getParameter('CutPlaneDist')
       let cutAmount = -0.2
       cutDist.setValue(cutAmount)
       const timerCallback = () => {
         cutAmount += 0.002
         cutDist.setValue(cutAmount)
         if (cutAmount < 0.0) {
-          timeoutId = setTimeout(timerCallback, 20) // Sample at 50fps.
+          setTimeout(timerCallback, 20) // Sample at 50fps.
         }
       }
       setTimeout(timerCallback, delay) // half second delay
@@ -525,9 +536,9 @@ function setupAssembly(scene, asset, renderer, appData) {
       plugXfo.tr = plugsPositions[index]
       plugXfo.tr.y *= 2
       p.getParameter('GlobalXfo').setValue(plugXfo)
-      if (p instanceof SocketAndPlug.PlugItem) {
-        p.state = SocketAndPlug.PlugMode.UNCONNECTED
-        plugs[key].socket.plugged.connect(() => {
+      if (p instanceof PlugItem) {
+        p.state = PlugMode.UNCONNECTED
+        plugs[key].socket.on('plugged', () => {
           plugCout--
           if (plugCout == 0) {
             hilightAllPlugs(1000)
@@ -540,3 +551,5 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
   }
 }
+
+export default setupAssembly
