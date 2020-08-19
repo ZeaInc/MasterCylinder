@@ -94,7 +94,7 @@ class PistonOperator extends Operator {
 // Registry.register('PistonOperator', PistonOperator)
 
 function setupSimulator(scene, asset, renderer, appData) {
-  const locatorSizeScale = 2.0
+  const locatorSizeScale = 0.0
   const locatorVisible = true
 
   const cutAway = true
@@ -104,40 +104,18 @@ function setupSimulator(scene, asset, renderer, appData) {
     cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
     asset.addChild(cutAwayGroup)
 
-    // asset.on('loaded', () => {
-    // cutAwayGroup.resolveItems([
-    //   ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre'],
-    //   ['.', 'SJ Cilindro MESTRE', 'tanque_fluido'],
-    //   ['.', 'bacia_1'],
-    //   ['.', 'SJ Cilindro MESTRE', 'Bucha_tanque'],
-    //   ['.', 'SJ Cilindro MESTRE', 'secundario'],
-    //   ['.', 'SJ Cilindro MESTRE', 'bucha_freio'],
-    //   ['.', 'SJ Cilindro MESTRE', '1.2'],
-    //   ['.', 'bacia_2'],
-    //   ['.', 'disco_dinamico'],
-    //   ['.', 'Part1'],
-    //   ['.', 'Symmetry of Part1.8.2'],
-    //   ['.', 'prato'],
-    //   ['.', 'paraf_m6'],
-    //   ['.', 'SJ Cilindro MESTRE', 'porca_m6.1'],
-    //   ['.', 'SJ Cilindro MESTRE', 'anel_borracha'],
-    // ])
     cutAwayGroup.resolveItems([
       ['.', 'bacia_1.1'],
       ['.', 'bacia_2.1'],
       ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
       ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
       ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-      // ['.', 'SJ Cilindro MESTRE.1', 'secundario.1'],
-      // ['.', 'SJ Cilindro MESTRE.1', 'bucha_freio.1'],
       ['.', 'SJ Cilindro MESTRE.1', '1'],
       ['.', 'SJ Cilindro MESTRE.1', '1.2', '1'],
       ['.', 'disco_dinamico'],
       ['.', 'Part1.8'],
       ['.', 'Symmetry of Part1.8.2'],
-      // ['.', 'SJ Cilindro MESTRE.1', 'anel_borracha.1'],
     ])
-    // })
 
     cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
     cutAwayGroup.getParameter('CutPlaneDist').setValue(0.0)
@@ -250,20 +228,24 @@ function setupSimulator(scene, asset, renderer, appData) {
     railLocatorItem.addChild(railsOp, false)
 
     const railGroup = new Group('railGroup')
-    railGroup.addItem(asset.resolvePath(['.', 'haste_vacuo']))
-    railGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'Cilindro2']))
-    railGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'secundaria.1']))
-    railGroup.addItem(asset.resolvePath(['.', 'bucha_vedada']))
-    railGroup.addItem(asset.resolvePath(['.', 'disco_dinamico']))
-    railGroup.addItem(asset.resolvePath(['.', 'mola11']))
-    railGroup.addItem(asset.resolvePath(['.', 'filtro_ar']))
+    railGroup.setSearchRoot(asset)
+    railGroup.resolveItems([
+      ['.', 'haste_vacuo'],
+      ['.', 'SJ Cilindro MESTRE.1', 'Secundario'],
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'],
+      ['.', 'bucha_vedada'],
+      ['.', 'disco_dinamico'],
+      ['.', 'mola11.1'],
+      ['.', 'filtro_ar'],
+    ])
+    // railGroup.getParameter('Highlighted').setValue(true)
     railLocatorItem.addChild(railGroup)
   }
 
   {
     const locatorItem0 = new LocatorItem('locatorItem0')
     const xfo0 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
-    xfo0.tr.set(0.0, -0.14, 0.0)
+    xfo0.tr.set(0.0, -0.144, 0.0)
     locatorItem0.getParameter('GlobalXfo').setValue(xfo0)
     locatorItem0.getParameter('Size').setValue(locatorSizeScale * 0.05)
     locatorItem0.getParameter('Visible').setValue(locatorVisible)
@@ -292,15 +274,19 @@ function setupSimulator(scene, asset, renderer, appData) {
     asset.addChild(secondaryPistonOperator)
 
     const secondaryPistonGroup = new Group('secondaryPistonGroup')
-    secondaryPistonGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'cilind']))
-    secondaryPistonGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'gaxeta']))
-    secondaryPistonGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'secundaria']))
-    secondaryPistonGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'bucha_guia']))
+    secondaryPistonGroup.setSearchRoot(asset)
+    secondaryPistonGroup.resolveItems([
+      ['.', 'SJ Cilindro MESTRE.1', 'primario1'],
+      ['.', 'SJ Cilindro MESTRE.1', 'primaria2'],
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'],
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria1'],
+    ])
+    // secondaryPistonGroup.getParameter('Highlighted').setValue(true)
     secondaryPistonLocator.addChild(secondaryPistonGroup)
 
     const locatorItem1 = new LocatorItem('locatorItem1')
     const xfo1 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
-    xfo1.tr.set(0.0, -0.188, 0.0)
+    xfo1.tr.set(0.0, -0.186, 0.0)
     locatorItem1.getParameter('GlobalXfo').setValue(xfo1)
     locatorItem1.getParameter('Size').setValue(locatorSizeScale * 0.08)
     locatorItem1.getParameter('Visible').setValue(locatorVisible)
@@ -335,7 +321,7 @@ function setupSimulator(scene, asset, renderer, appData) {
 
     {
       const aimOp = new AimOperator()
-      aimOp.getParameter('Stretch').setValue(0.5)
+      aimOp.getParameter('Stretch').setValue(1)
       aimOp.getParameter('Axis').setValue(2)
       aimOp.getInput('Target').setParam(locatorItem0.getParameter('GlobalXfo'))
       aimOp.getOutputByIndex(0).setParam(locatorItem1.getParameter('GlobalXfo'))
@@ -344,7 +330,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     }
 
     const primaryPistonSpringGroup = new Group('primaryPistonSpringGroup')
-    primaryPistonSpringGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'mola2']))
+    primaryPistonSpringGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE.1', 'mola2.1']))
     locatorItem1.addChild(primaryPistonSpringGroup)
   }
 
@@ -379,7 +365,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     const boosterSpringGroup = new Group('boosterSpringGroup')
     // boosterSpringGroup.getParameter("InitialXfoMode").setValue(0)
     boosterSpringLocator1.addChild(boosterSpringGroup, false)
-    boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12']))
+    boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12.1']))
   }
 }
 

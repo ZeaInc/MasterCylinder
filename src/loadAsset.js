@@ -138,19 +138,19 @@ function loadAsset() {
 
     blackPlasticGroup.resolveItems([
       ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-      ['.', 'tubo_vacuo'],
+      ['.', 'tubo_vacuo.1'],
     ])
 
     blackRubberGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'gaxeta'],
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'],
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'],
+      ['.', 'SJ Cilindro MESTRE.1', 'primaria2'], // Floating Ram end seal
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'], // Floating Ram end seal
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'], // Ram end Seal
       ['.', 'SJ Cilindro MESTRE.1', 'primario'], // Rubber seals to top reservoir
       ['.', 'SJ Cilindro MESTRE.1', 'secundario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE.1', 'anel_borracha'],
+      ['.', 'SJ Cilindro MESTRE.1', 'Part1.11'],
       ['.', 'filtro_ar'],
       ['.', 'SJ Cilindro MESTRE.1', 'Anel Trava'], // Booster seal
-      ['.', 'bucha_vacuo'], // Booster seal
+      ['.', 'bucha_vacuo.1'], // Booster seal
     ])
 
     whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1']])
@@ -159,7 +159,7 @@ function loadAsset() {
       ['.', 'SJ Cilindro MESTRE.1', '1.1'],
       ['.', 'SJ Cilindro MESTRE.1', '1.2'],
       ['.', 'SJ Cilindro MESTRE.1', '1.3'],
-      ['.', 'SJ Cilindro MESTRE.1', 'bucha_freio'],
+      ['.', 'SJ Cilindro MESTRE.1', '1'],
     ])
 
     shinyMetalGroup.resolveItems([
@@ -168,10 +168,10 @@ function loadAsset() {
       ['.', 'SJ Cilindro MESTRE.1', 'mola1.1'],
       ['.', 'disco_dinamico'], // Booster ram.
       ['.', 'Pedal_de freio.1'], // Brake pedal
+      ['.', 'bucha_vedada'], // Push Plate end of booster rod
 
-      ['.', 'paraf_m6'],
+      ['.', 'SJ Cilindro MESTRE.1', 'secundaria1'],
       ['.', 'SJ Cilindro MESTRE.1', 'porca_m6.1'],
-      ['.', 'Part1.1'],
       ['.', 'SJ Cilindro MESTRE.1', 'porca_m6'],
       ['.', 'mola11.1'],
     ])
@@ -180,15 +180,16 @@ function loadAsset() {
       ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
       ['.', 'prato.1'],
       ['.', 'Part1.8'],
+      ['.', 'Part1.1'], // Bolts back
+      ['.', 'Part1.6'], // Bolts back
       ['.', 'Symmetry of Part1.8.1'],
       ['.', 'Symmetry of Part1.8.2'],
       ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'cilind'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Cilindro2'],
+      ['.', 'SJ Cilindro MESTRE.1', 'primario1'],
+      ['.', 'SJ Cilindro MESTRE.1', 'Secundario'],
       ['.', 'haste_acionamento'],
       ['.', 'haste_vacuo'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Vedante'],
-      ['.', 'SJ Cilindro MESTRE.1', 'bucha_guia'],
+      ['.', 'SJ Cilindro MESTRE.1', 'Part1.9'],
     ])
 
     blackMetalGroup.resolveItems([

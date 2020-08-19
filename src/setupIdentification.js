@@ -68,11 +68,11 @@ function setupIdentification(scene, asset, renderer, appData) {
     ['.', 'bucha_vacuo.1'],
     ['.', 'tubo_vacuo.1'],
     ['.', 'haste_vacuo'],
-    ['.', 'bucha_vedada'],
+    ['.', 'bucha_vedada'], // Push Plate end of booster rod
     ['.', 'prato.1'],
-    ['.', 'paraf_m6.1'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+    // ['.', 'paraf_m6.1'],
+    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'], // Fluid tank cap
+    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'], // Fluid tank
   ])
   // })
 
@@ -93,18 +93,18 @@ function setupIdentification(scene, asset, renderer, appData) {
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Vedante', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.9', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'anel_borracha', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.11', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Cilindro2', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Secundario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 1.4)
   }
@@ -116,13 +116,13 @@ function setupIdentification(scene, asset, renderer, appData) {
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola2', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola2.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'bucha_guia', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
@@ -133,27 +133,27 @@ function setupIdentification(scene, asset, renderer, appData) {
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'cilind', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'gaxeta', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'primaria2', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 0.25)
   }
   {
     const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola1', 'GlobalXfo']))
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola1.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
-  {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'bucha_freio', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeFrontSideDir)
-    part.getParameter('Stage').setValue(11)
-  }
+  // {
+  //   const part = parts.addElement()
+  //   part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'bucha_freio', 'GlobalXfo']))
+  //   part.getParameter('Axis').setValue(explodeFrontSideDir)
+  //   part.getParameter('Stage').setValue(11)
+  // }
   {
     const part = parts.addElement()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', '1', 'GlobalXfo']))
@@ -214,10 +214,7 @@ function setupIdentification(scene, asset, renderer, appData) {
     // If so, then we emit and update, which will cause a redraw.
     animatingValue = true
     explodedAmount += 0.02
-    // console.log(explodedAmount)
     param.setValue(explodedAmount)
-    console.log('explodedAmount:', explodedAmount)
-    // renderer.requestRedraw();
     if (explodedAmount < 1.0) {
       timeoutId = setTimeout(timerCallback, 20) // Sample at 50fps.
     }

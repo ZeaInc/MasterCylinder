@@ -83,11 +83,11 @@ asset.on('loaded', () => {
   //       break
   //     }
   //     case 'identification': {
-  // setupIdentification(scene, asset, renderer, appData)
+  setupIdentification(scene, asset, renderer, appData)
   //       break
   //     }
   //     case 'simulation': {
-  setupSimulator(scene, asset, renderer, appData)
+  // setupSimulator(scene, asset, renderer, appData)
   //       break
   //     }
   //     case 'assembly': {
