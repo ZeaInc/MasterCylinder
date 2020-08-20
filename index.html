@@ -11,8 +11,6 @@
     <script src="./libs/jszip.js"></script>
     <script src="./libs/xlsx.js"></script>
 
-    <div id="viewport"></div>
-
     <style>
       #viewport {
         width: '100%';
@@ -21,7 +19,31 @@
         top: 0;
         left: 0;
       }
+      #button-holder {
+        display: block;
+        bottom: 15px;
+        right: 20px;
+        color: white;
+        margin: 10px;
+        position: absolute;
+      }
+      body {
+        padding: 20px;
+      }
+      button {
+        margin: 5px;
+        line-height: 40px;
+        font-weight: bold;
+        padding: 0 20px;
+        background: #dba92a;
+        border: solid;
+      }
+      button:hover {
+        background: white;
+      }
     </style>
+    <div id="viewport"></div>
+    <div id="button-holder"></div>
 
     <script type="module" src="./src/index.js"></script>
   </body>

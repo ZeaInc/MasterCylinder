@@ -1,5 +1,5 @@
-﻿import { Vec3, Color, BooleanParameter, TreeItem, Group } from '../libs/zea-engine/dist/index.esm.js'
-import { createLabelAndLine } from './DOMLabel.js'
+﻿import { Vec3, Color, BooleanParameter, TreeItem, Group, labelManager } from '../libs/zea-engine/dist/index.esm.js'
+import { createLabelAndLine } from './createLabelAndLine.js'
 import { ExplodePartsOperator } from '../libs/zea-kinematics/dist/index.rawimport.js'
 import {
   State,
@@ -22,13 +22,20 @@ function setupLearning(scene, asset, renderer) {
 
     const balls = []
     const labels = []
+    const toggledLabels = []
     let visibleIndex = -1
     const setLabelVisible = (index) => {
       labels.forEach((label, i) => {
         label.getParameter('Visible').setValue(i == index && index != visibleIndex)
       })
-      if (index != visibleIndex) visibleIndex = index
-      else visibleIndex = -1
+      if (index != visibleIndex) {
+        visibleIndex = index
+        if (toggledLabels.indexOf(index) == -1) {
+          toggledLabels.push(index)
+          if (toggledLabels.length == labels.length) {
+          }
+        }
+      } else visibleIndex = -1
     }
     const visibleParam = new BooleanParameter('Visible', false)
     visibleParam.on('valueChanged', () => {
@@ -498,7 +505,44 @@ function setupLearning(scene, asset, renderer) {
   }
 
   stateMachine.setInitialState('stage1State')
-  stateMachine.activateState('stage1State', false)
+  stateMachine.activateState('stage1State')
+
+  ///////////////////////////////////
+  // Setup Buttons
+
+  const buttonNextText = labelManager.getLabelText('servo_mestre', 'ButtonNext')
+  const buttonPreviousText = labelManager.getLabelText('servo_mestre', 'ButtonPrevious')
+
+  const buttonHolder = document.getElementById('button-holder')
+  const prevButton = document.createElement('button')
+  prevButton.id = '#prev-button'
+
+  prevButton.innerHTML = buttonPreviousText
+  buttonHolder.appendChild(prevButton)
+  prevButton.addEventListener('click', function () {
+    switch (stateMachine.getActiveState().getName()) {
+      case 'stage2State':
+        stateMachine.activateState('stage1State')
+        break
+      case 'stage3State':
+        stateMachine.activateState('stage2State')
+        break
+    }
+  })
+  const nextButton = document.createElement('button')
+  nextButton.id = '#next-button'
+  nextButton.innerHTML = buttonNextText
+  buttonHolder.appendChild(nextButton)
+  nextButton.addEventListener('click', function () {
+    switch (stateMachine.getActiveState().getName()) {
+      case 'stage1State':
+        stateMachine.activateState('stage2State')
+        break
+      case 'stage2State':
+        stateMachine.activateState('stage3State')
+        break
+    }
+  })
 }
 
 export default setupLearning

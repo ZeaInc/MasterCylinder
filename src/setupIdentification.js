@@ -1,7 +1,7 @@
-﻿import { Vec3, Color, Xfo, BooleanParameter, TreeItem, Group, Material } from '../libs/zea-engine/dist/index.esm.js'
+﻿import { Vec3, Color, Xfo, TreeItem, Group, Material } from '../libs/zea-engine/dist/index.esm.js'
 import { ExplodePartsOperator } from '../libs/zea-kinematics/dist/index.rawimport.js'
 import { PlanarMovementHandle } from '../libs/zea-ux/dist/index.rawimport.js'
-import { createLabelAndLine } from './DOMLabel.js'
+import { createLabelAndLine } from './createLabelAndLine.js'
 
 // https://material.io/design/color/#tools-for-picking-colors
 // Yellow 50
