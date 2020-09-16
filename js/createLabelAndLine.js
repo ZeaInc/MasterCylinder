@@ -1,16 +1,6 @@
-import {
-  Vec3,
-  Xfo,
-  Color,
-  Material,
-  Lines,
-  Sphere,
-  BillboardItem,
-  GeomItem,
-  Registry,
-} from '../libs/zea-engine/dist/index.esm.js'
 import { DOMLabel } from './DOMLabel.js'
-import { AimOperator } from '../libs/zea-kinematics/dist/index.rawimport.js'
+const { Vec3, Xfo, Color, Material, Lines, Sphere, BillboardItem, GeomItem, Registry } = window.zeaEngine
+const { AimOperator } = window.zeaKinematics
 
 let state = {}
 

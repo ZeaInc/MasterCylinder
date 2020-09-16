@@ -1,4 +1,5 @@
-﻿import {
+﻿import { LocatorItem } from './LocatorItem.js'
+const {
   Ray,
   Vec3,
   Color,
@@ -16,10 +17,9 @@
   Registry,
   RouterOperator,
   OperatorOutputMode,
-} from '../libs/zea-engine/dist/index.esm.js'
-import { AimOperator } from '../libs/zea-kinematics/dist/index.rawimport.js'
-import { ArcSlider } from '../libs/zea-ux/dist/index.rawimport.js'
-import { LocatorItem } from './LocatorItem.js'
+} = window.zeaEngine
+const { AimOperator } = window.zeaKinematics
+const { ArcSlider } = window.zeaUx
 
 class RailsOperator extends Operator {
   /**

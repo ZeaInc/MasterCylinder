@@ -1,14 +1,14 @@
-﻿import { Vec3, Color, BooleanParameter, TreeItem, Group, labelManager } from '../libs/zea-engine/dist/index.esm.js'
-import { createLabelAndLine } from './createLabelAndLine.js'
-import { ExplodePartsOperator } from '../libs/zea-kinematics/dist/index.rawimport.js'
-import {
+﻿import { createLabelAndLine } from './createLabelAndLine.js'
+const { Vec3, Color, BooleanParameter, TreeItem, Group, labelManager } = window.zeaEngine
+const { ExplodePartsOperator } = window.zeaKinematics
+const {
   State,
   StateMachine,
   KeyPressedEvent,
   SwitchState,
   SetParameterValue,
   SetCameraPositionAndTarget,
-} from '../libs/zea-statemachine/dist/index.rawimport.js'
+} = window.zeaStateMachine
 
 // https://material.io/design/color/#tools-for-picking-colors
 // Yellow 50

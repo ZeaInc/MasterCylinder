@@ -1,11 +1,4 @@
-import {
-  GeomItem,
-  Cross,
-  Material,
-  NumberParameter,
-  Color,
-  BooleanParameter,
-} from '../libs/zea-engine/dist/index.esm.js'
+const { GeomItem, Cross, Material, NumberParameter, Color, BooleanParameter } = window.zeaEngine
 
 let cross
 class LocatorItem extends GeomItem {

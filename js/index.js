@@ -1,5 +1,5 @@
-﻿import { Vec3, Color, EnvMap, Scene, GLRenderer, labelManager, PassType } from '../libs/zea-engine/dist/index.esm.js'
-import { GLCADPass, CADAsset } from '../libs/zea-cad/dist/index.rawimport.js'
+﻿const { Vec3, Color, EnvMap, Scene, GLRenderer, labelManager, PassType } = window.zeaEngine
+const { GLCADPass, CADAsset } = window.zeaCad
 
 function download(json, filename) {
   function downloadURI(uri, name) {

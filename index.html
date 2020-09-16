@@ -5,12 +5,6 @@
     <title>Master Cylinder</title>
     <link rel="shortcut icon" href="img/favicon-32x32.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-  </head>
-  <body text-align: left;>
-    <script src="./libs/dom-to-image-more.min.js"></script>
-    <script src="./libs/jszip.js"></script>
-    <script src="./libs/xlsx.js"></script>
-
     <style>
       #viewport {
         width: '100%';
@@ -42,9 +36,20 @@
         background: white;
       }
     </style>
+  </head>
+  <body text-align: left;>
     <div id="viewport"></div>
     <div id="button-holder"></div>
 
-    <script type="module" src="./src/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.8.0/src/dom-to-image-more.min.js"></script>
+    <script src="./libs/jszip.js"></script>
+    <script src="./libs/xlsx.js"></script>
+
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-engine@2.0.0"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-ux@2.0.0"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-kinematics@2.0.0"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-cad@2.0.0"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-statemachine@2.0.0"></script>
+    <script type="module" src="./js/index.js"></script>
   </body>
 </html>

@@ -1,6 +1,6 @@
-﻿import { Vec3, Color, Xfo, Group } from '../libs/zea-engine/dist/index.esm.js'
-import { SocketItem, PlugItem, PlugMode } from './SocketAndPlug.js'
-import { PlanarMovementHandle } from '../libs/zea-ux/dist/index.rawimport.js'
+﻿import { SocketItem, PlugItem, PlugMode } from './SocketAndPlug.js'
+const { Vec3, Color, Xfo, Group } = window.zeaEngine
+const { PlanarMovementHandle } = window.zeaUx
 
 const displayDebug = false
 function setupPlugAndSocket(

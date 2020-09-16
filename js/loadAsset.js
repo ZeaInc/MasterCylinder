@@ -1,5 +1,5 @@
-﻿import { Vec3, Quat, Xfo, EulerAngles, Group, Material, Color } from '../libs/zea-engine/dist/index.esm.js'
-import { GLCADPass, CADAsset } from '../libs/zea-cad/dist/index.rawimport.js'
+﻿const { Vec3, Quat, Xfo, EulerAngles, Group, Material, Color } = window.zeaEngine
+const { GLCADPass, CADAsset } = window.zeaCad
 
 function loadAsset() {
   const asset = new CADAsset()

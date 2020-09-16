@@ -1,4 +1,5 @@
-import {
+import { LocatorItem } from './LocatorItem.js'
+const {
   Ray,
   Vec3,
   Color,
@@ -19,8 +20,7 @@ import {
   Registry,
   RouterOperator,
   OperatorOutputMode,
-} from '../libs/zea-engine/dist/index.esm.js'
-import { LocatorItem } from './LocatorItem.js'
+} = window.zeaEngine
 
 const circle = new Circle()
 
