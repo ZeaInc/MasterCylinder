@@ -107,11 +107,11 @@ function setupSimulator(scene, asset, renderer, appData) {
     cutAwayGroup.resolveItems([
       ['.', 'bacia_1.1'],
       ['.', 'bacia_2.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-      ['.', 'SJ Cilindro MESTRE.1', '1'],
-      ['.', 'SJ Cilindro MESTRE.1', '1.2', '1'],
+      ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
+      ['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1'],
+      ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
+      ['.', 'SJ Cilindro MESTRE', '1'],
+      ['.', 'SJ Cilindro MESTRE', '1.2'],
       ['.', 'disco_dinamico'],
       ['.', 'Part1.8'],
       ['.', 'Symmetry of Part1.8.2'],
@@ -231,8 +231,8 @@ function setupSimulator(scene, asset, renderer, appData) {
     railGroup.setSearchRoot(asset)
     railGroup.resolveItems([
       ['.', 'haste_vacuo'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Secundario'],
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'],
+      ['.', 'SJ Cilindro MESTRE', 'Secundario'],
+      ['.', 'SJ Cilindro MESTRE', 'secundaria.1'],
       ['.', 'bucha_vedada'],
       ['.', 'disco_dinamico'],
       ['.', 'mola11.1'],
@@ -276,10 +276,10 @@ function setupSimulator(scene, asset, renderer, appData) {
     const secondaryPistonGroup = new Group('secondaryPistonGroup')
     secondaryPistonGroup.setSearchRoot(asset)
     secondaryPistonGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'primario1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'primaria2'],
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'],
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria1'],
+      ['.', 'SJ Cilindro MESTRE', 'primario1'],
+      ['.', 'SJ Cilindro MESTRE', 'primaria2'],
+      ['.', 'SJ Cilindro MESTRE', 'secundaria'],
+      ['.', 'SJ Cilindro MESTRE', 'secundaria1'],
     ])
     // secondaryPistonGroup.getParameter('Highlighted').setValue(true)
     secondaryPistonLocator.addChild(secondaryPistonGroup)
@@ -292,7 +292,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     locatorItem1.getParameter('Visible').setValue(locatorVisible)
     secondaryPistonLocator.addChild(locatorItem1)
 
-    const spring = asset.resolvePath(['.', 'SJ Cilindro MESTRE.1', 'mola1.1'])
+    const spring = asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'mola1.1'])
     const locatorItem2 = new LocatorItem('locatorItem2')
     const xfo2 = new Xfo()
     xfo2.ori = spring.getParameter('GlobalXfo').getValue().ori
@@ -330,7 +330,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     }
 
     const primaryPistonSpringGroup = new Group('primaryPistonSpringGroup')
-    primaryPistonSpringGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE.1', 'mola2.1']))
+    primaryPistonSpringGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'mola2.1']))
     locatorItem1.addChild(primaryPistonSpringGroup)
   }
 

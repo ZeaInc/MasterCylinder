@@ -98,12 +98,12 @@ function setupAssembly(scene, asset, renderer, appData) {
     ['.', 'haste_vacuo'],
     ['.', 'bucha_vedada'], // Push Plate end of booster rod
     ['.', 'prato.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'porca_m6.1', 'porca_m6'],
-    ['.', 'SJ Cilindro MESTRE.1', 'porca_m6'],
-    ['.', 'SJ Cilindro MESTRE.1', 'Part1.11'],
+    ['.', 'SJ Cilindro MESTRE', 'porca_m6.1'],
+    ['.', 'SJ Cilindro MESTRE', 'porca_m6'],
+    ['.', 'SJ Cilindro MESTRE', 'Part1.11'],
     // ['.', 'paraf_m6.1'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+    // ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
+    // ['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1'],
   ])
 
   // })
@@ -118,11 +118,11 @@ function setupAssembly(scene, asset, renderer, appData) {
   cutAwayGroup.resolveItems([
     // ['.', 'bacia_1.1'],
     // ['.', 'bacia_2.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    ['.', 'SJ Cilindro MESTRE.1', '1'],
-    ['.', 'SJ Cilindro MESTRE.1', '1.2', '1'],
+    ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
+    ['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1'],
+    ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
+    ['.', 'SJ Cilindro MESTRE', '1'],
+    ['.', 'SJ Cilindro MESTRE', '1.2'],
     // ['.', 'disco_dinamico'],
     // ['.', 'Part1.8'],
     // ['.', 'Symmetry of Part1.8.2'],
@@ -137,12 +137,12 @@ function setupAssembly(scene, asset, renderer, appData) {
     let masterCylinderGroup
     {
       masterCylinderGroup = new Group('masterCylinderGroup')
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'cilindro_mestre.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'cilindro_mestre.1'])
       masterCylinderGroup.addItem(item)
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.1']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.2']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.3']))
-      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE.1', '1']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.1']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.2']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.3']))
+      masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1']))
       const dir = new Vec3(1, 0, 0)
       const up = new Vec3(0, 0, 1)
       const handle = new PlanarMovementHandle()
@@ -160,7 +160,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.231, 0.015)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'primario'])
       const data = setupPlugAndSocket(
         asset,
         'fluidReservoirPlug1',
@@ -180,7 +180,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.141, 0.015)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundario'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundario'])
       const data = setupPlugAndSocket(
         asset,
         'fluidReservoirPlug2',
@@ -203,7 +203,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 0, 1), new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.2, 0.02)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'tanque_fluido.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'tanque_fluido.1'])
       const data = setupPlugAndSocket(
         asset,
         'fluidReservoir',
@@ -226,7 +226,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       dir.normalizeInPlace()
       xfo.ori.setFromDirectionAndUpvector(dir, new Vec3(1, 0, 0))
       xfo.tr.set(0.0, -0.157, 0.08)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.13'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.13'])
       const data = setupPlugAndSocket(
         asset,
         'fluidReservoirCap',
@@ -247,7 +247,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.288, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola1.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'mola1.1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonSocket',
@@ -268,7 +268,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.2325, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'primario1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonSocket',
@@ -289,7 +289,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, -1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.229, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'primaria2'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'primaria2'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonEndSeal',
@@ -312,7 +312,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.195, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonRamSeal',
@@ -333,7 +333,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.19, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria1'])
       const data = setupPlugAndSocket(
         asset,
         'secondaryPistonStartRamSocket',
@@ -354,7 +354,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.188, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola2.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'mola2.1'])
       const data = setupPlugAndSocket(
         asset,
         'primarySpringSocket',
@@ -375,7 +375,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.14, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Secundario'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Secundario'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPiston',
@@ -396,7 +396,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, -1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.139, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria.1'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria.1'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPistonEndSeal',
@@ -419,7 +419,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.118, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.9'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.9'])
       const data = setupPlugAndSocket(
         asset,
         'primaryPistonStartSeal',
@@ -441,7 +441,7 @@ function setupAssembly(scene, asset, renderer, appData) {
       const xfo = new Xfo()
       xfo.ori.setFromDirectionAndUpvector(new Vec3(0, 1, 0), new Vec3(0, 0, 1))
       xfo.tr.set(0.0, -0.114, 0.0)
-      const item = asset.resolvePath(['SJ Cilindro MESTRE.1', 'Anel Trava'])
+      const item = asset.resolvePath(['SJ Cilindro MESTRE', 'Anel Trava'])
       const data = setupPlugAndSocket(
         asset,
         'clipSocket',

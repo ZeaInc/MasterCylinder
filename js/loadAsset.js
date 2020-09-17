@@ -132,55 +132,56 @@ function loadAsset() {
   }
 
   asset.on('loaded', () => {
-    const logTreeItem = (treeItem, depth) => {
-      console.log(' '.repeat(depth * 2) + '|-' + treeItem.getName())
-      for (let i = 0; i < treeItem.getNumChildren(); i++) {
-        logTreeItem(treeItem.getChild(i), depth + 1)
-      }
-    }
-    logTreeItem(asset, 0)
+    // const logTreeItem = (treeItem, depth) => {
+    //   console.log(' '.repeat(depth * 2) + '|-' + treeItem.getName())
+    //   for (let i = 0; i < treeItem.getNumChildren(); i++) {
+    //     logTreeItem(treeItem.getChild(i), depth + 1)
+    //   }
+    // }
+    // logTreeItem(asset, 0)
+
     blackPlasticGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
+      ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
       ['.', 'tubo_vacuo.1'],
     ])
 
     blackRubberGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'primaria2'], // Floating Ram end seal
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'], // Floating Ram end seal
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'], // Ram end Seal
-      ['.', 'SJ Cilindro MESTRE.1', 'primario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE.1', 'secundario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.11'],
+      ['.', 'SJ Cilindro MESTRE', 'primaria2'], // Floating Ram end seal
+      ['.', 'SJ Cilindro MESTRE', 'secundaria'], // Floating Ram end seal
+      ['.', 'SJ Cilindro MESTRE', 'secundaria.1'], // Ram end Seal
+      ['.', 'SJ Cilindro MESTRE', 'primario'], // Rubber seals to top reservoir
+      ['.', 'SJ Cilindro MESTRE', 'secundario'], // Rubber seals to top reservoir
+      ['.', 'SJ Cilindro MESTRE', 'Part1.11'],
       ['.', 'filtro_ar'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Anel Trava'], // Booster seal
+      ['.', 'SJ Cilindro MESTRE', 'Anel Trava'], // Booster seal
       ['.', 'bucha_vacuo.1'], // Booster seal
     ])
 
-    whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1']])
+    whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1']])
 
     yellowPlasticGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', '1.1'],
-      ['.', 'SJ Cilindro MESTRE.1', '1.2'],
-      ['.', 'SJ Cilindro MESTRE.1', '1.3'],
-      ['.', 'SJ Cilindro MESTRE.1', '1'],
+      ['.', 'SJ Cilindro MESTRE', '1.1'],
+      ['.', 'SJ Cilindro MESTRE', '1.2'],
+      ['.', 'SJ Cilindro MESTRE', '1.3'],
+      ['.', 'SJ Cilindro MESTRE', '1'],
     ])
 
     shinyMetalGroup.resolveItems([
       ['.', 'mola12.1'], //  Big spring
-      ['.', 'SJ Cilindro MESTRE.1', 'mola2.1'], //  Big spring
-      ['.', 'SJ Cilindro MESTRE.1', 'mola1.1'],
+      ['.', 'SJ Cilindro MESTRE', 'mola2.1'], //  Big spring
+      ['.', 'SJ Cilindro MESTRE', 'mola1.1'],
       ['.', 'disco_dinamico'], // Booster ram.
       ['.', 'Pedal_de freio.1'], // Brake pedal
       ['.', 'bucha_vedada'], // Push Plate end of booster rod
 
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'porca_m6.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'porca_m6'],
+      ['.', 'SJ Cilindro MESTRE', 'secundaria1'],
+      ['.', 'SJ Cilindro MESTRE', 'porca_m6.1'],
+      ['.', 'SJ Cilindro MESTRE', 'porca_m6'],
       ['.', 'mola11.1'],
     ])
 
     darkGreyMetalGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
+      ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
       ['.', 'prato.1'],
       ['.', 'Part1.8'],
       ['.', 'Part1.1'], // Bolts back
@@ -188,11 +189,11 @@ function loadAsset() {
       ['.', 'Symmetry of Part1.8.1'],
       ['.', 'Symmetry of Part1.8.2'],
       ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'primario1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Secundario'],
+      ['.', 'SJ Cilindro MESTRE', 'primario1'],
+      ['.', 'SJ Cilindro MESTRE', 'Secundario'],
       ['.', 'haste_acionamento'],
       ['.', 'haste_vacuo'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.9'],
+      ['.', 'SJ Cilindro MESTRE', 'Part1.9'],
     ])
 
     blackMetalGroup.resolveItems([

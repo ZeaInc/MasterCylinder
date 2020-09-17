@@ -1,5 +1,5 @@
-﻿const { Vec3, Color, EnvMap, Scene, GLRenderer, labelManager, PassType } = window.zeaEngine
-const { GLCADPass, CADAsset } = window.zeaCad
+﻿const { SystemDesc, Vec3, Color, EnvMap, Scene, GLRenderer, labelManager, PassType } = window.zeaEngine
+const { GLCADPass } = window.zeaCad
 
 function download(json, filename) {
   function downloadURI(uri, name) {
@@ -48,10 +48,13 @@ const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
 renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 scene.getSettings().getParameter('BackgroundColor').setValue(new Color(0.8, 0.8, 0.8))
 
-const envMap = new EnvMap('envMap')
-envMap.getParameter('FilePath').setValue('data/HDR_029_Sky_Cloudy_Ref.vlenv')
-scene.setEnvMap(envMap)
-// renderer.displayEnvironment = false
+if (!SystemDesc.isMobileDevice && renderer.gl.floatTexturesSupported) {
+  const envMap = new EnvMap('envMap')
+  envMap.getParameter('FilePath').setValue('data/HDR_029_Sky_Cloudy_Ref.vlenv')
+  envMap.setHDRTint(new Color(1.5, 1.5, 1.5, 1))
+  scene.setEnvMap(envMap)
+  // renderer.displayEnvironment = false
+}
 
 //////////////////////////
 // Asset
