@@ -11,7 +11,8 @@ function loadAsset() {
   //     '*': 'SimpleSurfaceShader'
   // });
   asset.getParameter('GlobalXfo').setValue(xfo)
-  asset.getParameter('DataFilePath').setValue('data/servo_mestre.zcad')
+  // asset.getParameter('DataFilePath').setValue('data/servo_mestre.zcad')
+  asset.getParameter('DataFilePath').setValue('data/servo_mestre-visu.zcad')
 
   // return asset
 
@@ -28,7 +29,7 @@ function loadAsset() {
         Roughness: 0.45,
         Reflectance: 0.03,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     blackPlasticGroup.getParameter('Material').setValue(material)
     asset.addChild(blackPlasticGroup)
@@ -44,7 +45,7 @@ function loadAsset() {
         Roughness: 0.85,
         Reflectance: 0.01,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     blackRubberGroup.getParameter('Material').setValue(material)
     asset.addChild(blackRubberGroup)
@@ -60,7 +61,7 @@ function loadAsset() {
         Roughness: 0.25,
         Reflectance: 0.03,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     whitePlasticGroup.getParameter('Material').setValue(material)
     asset.addChild(whitePlasticGroup)
@@ -76,7 +77,7 @@ function loadAsset() {
         Roughness: 0.85,
         Reflectance: 0.0,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     yellowPlasticGroup.getParameter('Material').setValue(material)
     asset.addChild(yellowPlasticGroup)
@@ -92,7 +93,7 @@ function loadAsset() {
         Roughness: 0.25,
         Reflectance: 0.85,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     shinyMetalGroup.getParameter('Material').setValue(material)
     asset.addChild(shinyMetalGroup)
@@ -108,7 +109,7 @@ function loadAsset() {
         Roughness: 0.75,
         Reflectance: 0.7,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     darkGreyMetalGroup.getParameter('Material').setValue(material)
     asset.addChild(darkGreyMetalGroup)
@@ -124,18 +125,20 @@ function loadAsset() {
         Roughness: 0.35,
         Reflectance: 0.7,
       },
-      'GLDrawCADSurfaceShader'
+      'StandardSurfaceShader'
     )
     blackMetalGroup.getParameter('Material').setValue(material)
     asset.addChild(blackMetalGroup)
   }
 
-  // asset.addEventListener('loaded', () => {
   asset.on('loaded', () => {
-    // asset.traverse((item, depth)=>{
-    //   console.log(item.getPath())
-    // })
-
+    const logTreeItem = (treeItem, depth) => {
+      console.log(' '.repeat(depth * 2) + '|-' + treeItem.getName())
+      for (let i = 0; i < treeItem.getNumChildren(); i++) {
+        logTreeItem(treeItem.getChild(i), depth + 1)
+      }
+    }
+    logTreeItem(asset, 0)
     blackPlasticGroup.resolveItems([
       ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
       ['.', 'tubo_vacuo.1'],
