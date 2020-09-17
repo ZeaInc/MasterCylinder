@@ -59,10 +59,10 @@ import loadAsset from './loadAsset.js'
 const asset = loadAsset()
 scene.root.addChild(asset)
 
-import setupLearning from './setupLearning.js'
-import setupIdentification from './setupIdentification.js'
-import setupSimulator from './setupSimulator.js'
-import setupAssembly from './setupAssembly.js'
+// import setupLearning from './setupLearning.js'
+// import setupIdentification from './setupIdentification.js'
+// import setupSimulator from './setupSimulator.js'
+// import setupAssembly from './setupAssembly.js'
 
 asset.once('loaded', () => {
   renderer.frameAll()

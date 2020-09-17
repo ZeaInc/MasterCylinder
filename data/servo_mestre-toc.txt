@@ -1,0 +1,50 @@
+|-servo_mestre
+   |-blackPlasticGroup
+   |-blackRubberGroup
+   |-whitePlasticGroup
+   |-yellowPlasticGroup
+   |-shinyMetalGroup
+   |-darkGreyMetalGroup
+   |-blackMetalGroup
+   |-bacia_1
+   |-bucha_vacuo
+   |-tubo_vacuo
+   |-prato
+   |-bacia_2
+   |-haste_vacuo
+   |-disco_dinamico
+   |-bucha_vedada
+   |-haste_acionamento
+   |-mola11
+   |-filtro_ar
+   |-mola12
+   |-paraf_m6
+   |-paraf_m6_014
+   |-SJ Cilindro MESTRE
+     |-cilindro_mestre
+     |-Bucha_tanque
+     |-Bucha_tanque_003
+     |-bucha_freio
+     |-bucha_freio_005
+     |-bucha_freio_006
+     |-bucha_freio_007
+     |-cilind
+     |-gaxeta
+     |-gaxeta_010
+     |-bucha_guia
+     |-Cilindro2
+     |-gaxeta_013
+     |-Vedante
+     |-Anel Trava
+     |-anel_borracha
+     |-tanque_fluido
+     |-tampa_tanque
+     |-mola2
+     |-mola1
+     |-porca_m6
+     |-porca_m6_022
+   |-Part1
+   |-Symmetry of Part1
+   |-Symmetry of Part1_018
+   |-Symmetry of Symmetry of Part1
+   |-Pedal_de freio

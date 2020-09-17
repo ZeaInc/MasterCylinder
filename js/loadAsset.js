@@ -139,66 +139,69 @@ function loadAsset() {
       }
     }
     logTreeItem(asset, 0)
+    /*
     blackPlasticGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-      ['.', 'tubo_vacuo.1'],
+      ['.', 'SJ Cilindro MESTRE', 'tampa_tanque'],
+      ['.', 'tubo_vacuo'],
     ])
 
     blackRubberGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'primaria2'], // Floating Ram end seal
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria'], // Floating Ram end seal
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria.1'], // Ram end Seal
-      ['.', 'SJ Cilindro MESTRE.1', 'primario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE.1', 'secundario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.11'],
+      ['.', 'SJ Cilindro MESTRE', 'gaxeta'],
+      ['.', 'SJ Cilindro MESTRE', 'gaxeta_010'],
+      ['.', 'SJ Cilindro MESTRE', 'gaxeta_013'],
+      ['.', 'SJ Cilindro MESTRE', 'Bucha_tanque'], // Rubber seals to top reservoir
+      ['.', 'SJ Cilindro MESTRE', 'Bucha_tanque_003'], // Rubber seals to top reservoir
+      ['.', 'SJ Cilindro MESTRE', 'anel_borracha'],
       ['.', 'filtro_ar'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Anel Trava'], // Booster seal
-      ['.', 'bucha_vacuo.1'], // Booster seal
+      ['.', 'SJ Cilindro MESTRE', 'Anel Trava'], // Booster seal
+      ['.', 'bucha_vacuo'], // Booster seal
     ])
 
-    whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1']])
+    whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE', 'tanque_fluido']])
 
     yellowPlasticGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', '1.1'],
-      ['.', 'SJ Cilindro MESTRE.1', '1.2'],
-      ['.', 'SJ Cilindro MESTRE.1', '1.3'],
-      ['.', 'SJ Cilindro MESTRE.1', '1'],
+      ['.', 'SJ Cilindro MESTRE', 'bucha_freio_005'],
+      ['.', 'SJ Cilindro MESTRE', 'bucha_freio_006'],
+      ['.', 'SJ Cilindro MESTRE', 'bucha_freio_007'],
+      ['.', 'SJ Cilindro MESTRE', 'bucha_freio'],
     ])
 
     shinyMetalGroup.resolveItems([
-      ['.', 'mola12.1'], //  Big spring
-      ['.', 'SJ Cilindro MESTRE.1', 'mola2.1'], //  Big spring
-      ['.', 'SJ Cilindro MESTRE.1', 'mola1.1'],
+      ['.', 'mola12'], //  Big spring
+      ['.', 'SJ Cilindro MESTRE', 'mola2'], //  Big spring
+      ['.', 'SJ Cilindro MESTRE', 'mola1'],
       ['.', 'disco_dinamico'], // Booster ram.
-      ['.', 'Pedal_de freio.1'], // Brake pedal
-      ['.', 'bucha_vedada'], // Push Plate end of booster rod
+      ['.', 'Pedal_de freio'], // Brake pedal
 
-      ['.', 'SJ Cilindro MESTRE.1', 'secundaria1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'porca_m6.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'porca_m6'],
-      ['.', 'mola11.1'],
+      ['.', 'paraf_m6'],
+      ['.', 'SJ Cilindro MESTRE', 'porca_m6'],
+      ['.', 'Part1'],
+      ['.', 'SJ Cilindro MESTRE', 'porca_m6_022'],
+      ['.', 'mola11'],
     ])
 
     darkGreyMetalGroup.resolveItems([
-      ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
-      ['.', 'prato.1'],
-      ['.', 'Part1.8'],
-      ['.', 'Part1.1'], // Bolts back
-      ['.', 'Part1.6'], // Bolts back
-      ['.', 'Symmetry of Part1.8.1'],
-      ['.', 'Symmetry of Part1.8.2'],
-      ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'primario1'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Secundario'],
+      ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre'],
+      ['.', 'prato'],
+      ['.', 'Part1'],
+      ['.', 'paraf_m6_014'],
+      ['.', 'bucha_vedada'],
+      ['.', 'Symmetry of Part1'],
+      ['.', 'Symmetry of Part1_018'],
+      ['.', 'Symmetry of Symmetry of Part1'],
+      ['.', 'SJ Cilindro MESTRE', 'cilind'],
+      ['.', 'SJ Cilindro MESTRE', 'Cilindro2'],
       ['.', 'haste_acionamento'],
       ['.', 'haste_vacuo'],
-      ['.', 'SJ Cilindro MESTRE.1', 'Part1.9'],
+      ['.', 'SJ Cilindro MESTRE', 'Vedante'],
+      ['.', 'SJ Cilindro MESTRE', 'bucha_guia'],
     ])
 
     blackMetalGroup.resolveItems([
-      ['.', 'bacia_1.1'],
-      ['.', 'bacia_2.1'],
+      ['.', 'bacia_1'],
+      ['.', 'bacia_2'],
     ])
+    */
   })
 
   return asset

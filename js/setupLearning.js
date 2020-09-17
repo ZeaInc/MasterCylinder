@@ -109,19 +109,20 @@ function setupLearning(scene, asset, renderer) {
 
   // asset.on('loaded', () => {
   cutAwayGroup.resolveItems([
-    ['.', 'bacia_1.1'],
-    ['.', 'bacia_2.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'cilindro_mestre.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
-    ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'secundario.1'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'bucha_freio.1'],
-    ['.', 'SJ Cilindro MESTRE.1', '1'],
-    ['.', 'SJ Cilindro MESTRE.1', '1.2', '1'],
+    ['.', 'bacia_1'],
+    ['.', 'bacia_2'],
+    ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre'],
+    ['.', 'SJ Cilindro MESTRE', 'tanque_fluido'],
+    ['.', 'SJ Cilindro MESTRE', 'Bucha_tanque_003'],
+    ['.', 'SJ Cilindro MESTRE', 'Bucha_tanque'],
+    ['.', 'SJ Cilindro MESTRE', 'bucha_freio'],
+    ['.', 'SJ Cilindro MESTRE', 'bucha_freio_006'],
+    ['.', 'SJ Cilindro MESTRE', 'porca_m6_022'],
+    ['.', 'paraf_m6'],
     ['.', 'disco_dinamico'],
-    ['.', 'Part1.8'],
-    ['.', 'Symmetry of Part1.8.2'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'anel_borracha.1'],
+    ['.', 'Part1'],
+    ['.', 'Symmetry of Part1_018'],
+    ['.', 'SJ Cilindro MESTRE', 'anel_borracha'],
   ])
   // })
   cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
@@ -153,31 +154,33 @@ function setupLearning(scene, asset, renderer) {
 
   // asset.on('loaded', () => {
   boosterAndPedalGroup.resolveItems([
-    ['.', 'bacia_1.1'],
-    ['.', 'bacia_2.1'],
+    ['.', 'bacia_1'],
+    ['.', 'bacia_2'],
     ['.', 'disco_dinamico'],
-    ['.', 'Part1.1'],
-    ['.', 'Part1.6'],
-    ['.', 'Part1.8'],
-    ['.', 'Symmetry of Part1.8.1'],
-    ['.', 'Symmetry of Part1.8.2'],
-    ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
+    ['.', 'Part1'],
+    ['.', 'Symmetry of Part1'],
+    ['.', 'Symmetry of Part1_018'],
+    ['.', 'Symmetry of Symmetry of Part1'],
     ['.', 'haste_acionamento'],
-    ['.', 'Pedal_de freio.1'],
-    ['.', 'mola11.1'],
-    ['.', 'mola12.1'],
+    ['.', 'Pedal_de freio'],
+    ['.', 'mola11'],
+    ['.', 'mola12'],
     ['.', 'filtro_ar'],
-    ['.', 'bucha_vacuo.1'],
-    ['.', 'tubo_vacuo.1'],
+    ['.', 'bucha_vacuo'],
+    ['.', 'tubo_vacuo'],
     ['.', 'haste_vacuo'],
-    ['.', 'bucha_vedada'], // Push Plate end of booster rod
-    ['.', 'prato.1'],
+    ['.', 'bucha_vedada'],
+    ['.', 'prato'],
+    ['.', 'paraf_m6'],
+    ['.', 'SJ Cilindro MESTRE', 'porca_m6_022'],
+    // ['.', 'Part1.1'],
+    ['.', 'SJ Cilindro MESTRE', 'porca_m6'],
+
     // ['.', 'paraf_m6.1'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'Part1.13'],
-    // ['.', 'SJ Cilindro MESTRE.1', 'tanque_fluido.1'],
+    // ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
+    // ['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1'],
   ])
   // })
-
   const explodedPartsOp = new ExplodePartsOperator('ExplodeParts')
   asset.addChild(explodedPartsOp)
   explodedPartsOp.getParameter('Dist').setValue(0.5)
@@ -188,117 +191,118 @@ function setupLearning(scene, asset, renderer) {
   const explodeBackSideDir = new Vec3(-0.4, 0, 0)
   const explodeTopDir = new Vec3(0, 0, 0.4)
 
+  /*
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Anel Trava', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Anel Trava', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.9', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.9', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.11', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.11', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Secundario', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 1.4)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Secundario', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 1.4);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria.1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria.1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola2.1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola2.1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundaria', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'primaria2', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
-    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 0.25)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primaria2', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
+    part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 0.25);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'mola1.1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeDir)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola1.1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeDir);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', '1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeFrontSideDir)
-    part.getParameter('Stage').setValue(11)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeFrontSideDir);
+    part.getParameter('Stage').setValue(11);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.2', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeFrontSideDir)
-    part.getParameter('Stage').setValue(11)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.2', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeFrontSideDir);
+    part.getParameter('Stage').setValue(11);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeBackSideDir)
-    part.getParameter('Stage').setValue(11)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeBackSideDir);
+    part.getParameter('Stage').setValue(11);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', '1.3', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeBackSideDir)
-    part.getParameter('Stage').setValue(11)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.3', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeBackSideDir);
+    part.getParameter('Stage').setValue(11);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'Part1.13', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeTopDir)
-    part.getParameter('Stage').setValue(9)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.13', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeTopDir);
+    part.getParameter('Stage').setValue(9);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'tanque_fluido.1', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeTopDir)
-    part.getParameter('Stage').setValue(11)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'tanque_fluido.1', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeTopDir);
+    part.getParameter('Stage').setValue(11);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'secundario', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeTopDir)
-    part.getParameter('Stage').setValue(13)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundario', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeTopDir);
+    part.getParameter('Stage').setValue(13);
   }
   {
-    const part = parts.addElement()
-    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE.1', 'primario', 'GlobalXfo']))
-    part.getParameter('Axis').setValue(explodeTopDir)
-    part.getParameter('Stage').setValue(13)
+    const part = parts.addElement();
+    part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario', 'GlobalXfo']));
+    part.getParameter('Axis').setValue(explodeTopDir);
+    part.getParameter('Stage').setValue(13);
   }
-  explodedPartsOp.getParameter('Stages').setValue(15)
+  explodedPartsOp.getParameter('Stages').setValue(15);
 
   // if (state == 2) {
   //   boosterAndPedalGroup.getParameter('Visible').setValue(false);
@@ -325,7 +329,7 @@ function setupLearning(scene, asset, renderer) {
   //   const target = renderer.getViewport().getCamera().getTargetPostion()
   //   console.log(xfo.toString(), target.toString())
   // })
-
+*/
   const stateMachine = new StateMachine()
   asset.addChild(stateMachine)
 
