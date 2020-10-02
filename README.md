@@ -23,3 +23,6 @@ e.g.
 - clone the repo
 - Run `yarn install`
 - run a local server
+
+## Acknowledgements
+CAD Model by [Bruno Razaboni](https://grabcad.com/bruno.razaboni-1) last accessed from [GrabCAD](https://grabcad.com/library/brake-components-1) on 2020-10-02
