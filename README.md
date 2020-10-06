@@ -1,7 +1,7 @@
 # Zea Master Cylinder Showcase
 Versatility is one of the key features of the Zea Engine. The master cylinder showcase demonstrates the flexibility of our SDK in four projects that show the same mechanical model being used for simulation, guided learning, parts identification and assembly.
 
-Visit the [showcase page](https://blog.zea.live/en/showcase/master-cylinder) for more information.
+Visit the [Zea showcase page](https://blog.zea.live/en/showcase/master-cylinder) for more information.
 
 ## Features
 - Spring simulation
@@ -29,9 +29,9 @@ The engine will detect the language setting of your browser and display the labe
 
 ## Getting started
 
-- clone the repo
+- Clone the repo
 - Run `yarn install`
-- run a local server
+- Run a local server
 
 ## Acknowledgements
-CAD Model by [Bruno Razaboni](https://grabcad.com/bruno.razaboni-1) last accessed from [GrabCAD](https://grabcad.com/library/brake-components-1) on 2020-10-02
+CAD Model by [Bruno Razaboni](https://grabcad.com/bruno.razaboni-1) last accessed from [GrabCAD](https://grabcad.com/library/brake-components-1) on 2020-10-02.
