@@ -1,4 +1,3 @@
-![Discourse topics](https://img.shields.io/discourse/topics?color=f9ce03&label=Community&logo=Zea&logoColor=2d2d2d&server=https%3A%2F%2Fcommunity.zea.live%2F)
 
 # Zea Master Cylinder Showcase
 Versatility is one of the key features of the Zea Engine. The master cylinder showcase demonstrates the flexibility of our SDK in four projects that show the same mechanical model being used for simulation, guided learning, parts identification and assembly.
