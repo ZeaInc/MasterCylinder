@@ -15,6 +15,7 @@ const {
   TreeItem,
   Material,
   Group,
+  SelectionSet,
   Circle,
   GeomItem,
   Registry,
@@ -341,10 +342,10 @@ class PlugItem extends Group {
 
   /**
    * Causes an event to occur when the mouse pointer is moved onto an element.
-   * @param {MouseEvent} event - The mouse event that occurs.
+   * @param {PointerEvent} event - The mouse event that occurs.
    */
-  onMouseEnter(event) {
-    super.onMouseEnter(event)
+  onPointerEnter(event) {
+    super.onPointerEnter(event)
 
     const color = new Color(0.25, 0.85, 1, 0.0)
     this.getParameter('HighlightColor').setValue(color)
@@ -354,10 +355,10 @@ class PlugItem extends Group {
 
   /**
    * Causes an event to occur when the mouse pointer is moved out of an element.
-   * @param {MouseEvent} event - The mouse event that occurs.
+   * @param {PointerEvent} event - The mouse event that occurs.
    */
-  onMouseLeave(event) {
-    super.onMouseLeave(event)
+  onPointerLeave(event) {
+    super.onPointerLeave(event)
     this.getParameter('Highlighted').setValue(false)
   }
 

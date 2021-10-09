@@ -26,14 +26,11 @@ function download(json, filename) {
 const scene = new Scene()
 
 const renderer = new GLRenderer(document.getElementById('viewport'))
-
-const cadPass = new GLCADPass()
-cadPass.setShaderPreprocessorValue('#define ENABLE_PBR')
-renderer.addPass(cadPass, PassType.OPAQUE)
 renderer.setScene(scene)
-renderer.resumeDrawing()
-
-scene.setupGrid(1, 10)
+// renderer.getViewport().debugGeomShader = true
+// renderer.getViewport().debugHighlightedGeomsBuffer = true
+renderer.highlightOutlineThickness = 1
+// scene.setupGrid(1, 10)
 // return;
 
 const urlParams = new URLSearchParams(window.location.search)
@@ -43,18 +40,19 @@ if (language) {
 }
 labelManager.loadLibrary('servo_mestre.xlsx', 'data/servo_mestre.xlsx')
 
+const camera = renderer.getViewport().getCamera()
 const position = new Vec3({ x: 0.86471, y: 0.87384, z: 0.18464 })
 const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
-renderer.getViewport().getCamera().setPositionAndTarget(position, target)
+camera.setPositionAndTarget(position, target)
 scene.getSettings().getParameter('BackgroundColor').setValue(new Color(0.8, 0.8, 0.8))
 
-if (!SystemDesc.isMobileDevice && renderer.gl.floatTexturesSupported) {
-  const envMap = new EnvMap('envMap')
-  envMap.getParameter('FilePath').setValue('data/HDR_029_Sky_Cloudy_Ref.vlenv')
-  envMap.setHDRTint(new Color(1.5, 1.5, 1.5, 1))
-  scene.setEnvMap(envMap)
-  // renderer.displayEnvironment = false
-}
+// hack to fix compatibility with zea-statemachine
+camera.getTargetPostion = camera.getTargetPosition
+
+const envMap = new EnvMap('envMap')
+envMap.load('data/HDR_029_Sky_Cloudy_Ref.vlenv')
+envMap.setHDRTint(new Color(1.5, 1.5, 1.5, 1))
+scene.setEnvMap(envMap)
 
 //////////////////////////
 // Asset
@@ -166,7 +164,7 @@ asset.once('loaded', () => {
 //         break
 //     }
 //   })
-renderer.getViewport().on('mouseDownOnGeom', (event) => {
+renderer.getViewport().on('pointerDownOnGeom', (event) => {
   const intersectionData = event.intersectionData
   const geomItem = intersectionData.geomItem
   console.log(geomItem.getPath())

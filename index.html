@@ -5,10 +5,11 @@
     <title>Master Cylinder</title>
     <link rel="shortcut icon" href="img/favicon-32x32.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.9/tailwind.min.css" />
     <style>
       #viewport {
-        width: '100%';
-        height: '100%';
+        width: 100%;
+        height: 100%;
         position: 'fixed';
         top: 0;
         left: 0;
@@ -23,6 +24,8 @@
       }
       body {
         padding: 20px;
+        width: 100%;
+        height: 100%;
       }
       button {
         margin: 5px;
@@ -33,23 +36,24 @@
         border: solid;
       }
       button:hover {
-        background: white;
+        background: #ddb347;
       }
     </style>
   </head>
-  <body text-align: left;>
-    <div id="viewport"></div>
+  <body class="overflow-hidden h-screen w-screen p-0">
+    <canvas id="viewport" class="overflow-hidden h-screen"></canvas>
     <div id="button-holder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/dom-to-image-more@2.8.0/src/dom-to-image-more.min.js"></script>
     <script src="./libs/jszip.js"></script>
     <script src="./libs/xlsx.js"></script>
 
-    <script defer crossorigin src="https://unpkg.com/@zeainc/zea-engine@2.1.0-mobile.3"></script>
-    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-cad@2.1.0-mobile.0"></script>
-    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-ux@2.1.0-mobile.0"></script>
-    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-kinematics@2.1.0-mobile.0"></script>
-    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-statemachine@2.0.0"></script>
+    <script defer crossorigin src="./libs/zea-engine/index.umd.js"></script>
+    <!-- <script defer crossorigin src="https://unpkg.com/@zeainc/zea-engine@3.11/dist/index.umd.js"></script> -->
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-cad@3/dist/index.umd.js"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-ux@3/dist/index.umd.js"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-kinematics@3/dist/index.umd.js"></script>
+    <script defer crossorigin src="https://cdn.jsdelivr.net/npm/@zeainc/zea-statemachine@2/dist/index.umd.js"></script>
     <script type="module" src="./js/index.js"></script>
   </body>
 </html>

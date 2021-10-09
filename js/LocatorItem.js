@@ -2,19 +2,17 @@ const { GeomItem, Cross, Material, NumberParameter, Color, BooleanParameter } = 
 
 let cross
 class LocatorItem extends GeomItem {
-  constructor(name, size = 0.2, color = null) {
+  constructor(name, size = 0.2, color = undefined) {
     if (!cross) {
       cross = new Cross()
     }
 
     let material
-    if (color) {
-      if (color instanceof Color) {
-        material = new Material('LocatorMaterial', 'LinesShader')
-        material.getParameter('BaseColor').setValue(color)
-      } else if (color instanceof Material) {
-        material = color
-      }
+    if (color instanceof Color || !color) {
+      material = new Material('LocatorMaterial', 'LinesShader')
+      if (color) material.getParameter('BaseColor').setValue(color)
+    } else if (color instanceof Material) {
+      material = color
     }
 
     super(name, cross, material)

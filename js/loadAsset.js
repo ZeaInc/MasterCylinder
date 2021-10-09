@@ -12,7 +12,6 @@ function loadAsset() {
   // });
   asset.getParameter('GlobalXfo').setValue(xfo)
   // asset.getParameter('DataFilePath').setValue('data/servo_mestre.zcad')
-  asset.getParameter('DataFilePath').setValue('data/servo_mestre-visu.zcad')
 
   // return asset
 
@@ -131,7 +130,9 @@ function loadAsset() {
     asset.addChild(blackMetalGroup)
   }
 
-  asset.on('loaded', () => {
+  asset.load('data/servo_mestre-visu.zcad').then(() => {
+    const edgeMaterial = asset.getMaterialLibrary().getMaterial('Edge')
+    edgeMaterial.getParameter('Overlay').setValue(0.0001)
     // const logTreeItem = (treeItem, depth) => {
     //   console.log(' '.repeat(depth * 2) + '|-' + treeItem.getName())
     //   for (let i = 0; i < treeItem.getNumChildren(); i++) {

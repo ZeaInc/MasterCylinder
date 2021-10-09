@@ -1,14 +1,8 @@
 ﻿import { createLabelAndLine } from './createLabelAndLine.js'
 const { Vec3, Color, BooleanParameter, TreeItem, Group, labelManager } = window.zeaEngine
 const { ExplodePartsOperator } = window.zeaKinematics
-const {
-  State,
-  StateMachine,
-  KeyPressedEvent,
-  SwitchState,
-  SetParameterValue,
-  SetCameraPositionAndTarget,
-} = window.zeaStateMachine
+const { State, StateMachine, KeyPressedEvent, SwitchState, SetParameterValue, SetCameraPositionAndTarget } =
+  window.zeaStateMachine
 
 // https://material.io/design/color/#tools-for-picking-colors
 // Yellow 50
@@ -60,7 +54,7 @@ function setupLearning(scene, asset, renderer) {
       billboard.getParameter('Visible').setValue(false)
       labelTree.addChild(ballItem, true)
 
-      ballItem.on('mouseDown', () => {
+      ballItem.on('pointerDown', () => {
         setLabelVisible(index)
       })
     })

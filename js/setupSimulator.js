@@ -47,7 +47,7 @@ class RailsOperator extends Operator {
     const ray = new Ray(railXfo.tr, railXfo.ori.getXaxis())
 
     if (weight > 0) {
-      let tr = ray.closestPoint(xfo.tr)
+      let tr = ray.pointAtDist(ray.closestPoint(xfo.tr))
       let ori = railXfo.ori
       if (weight < 1.0) {
         tr = xfo.tr.lerp(xfo.tr, weight)
@@ -151,9 +151,9 @@ function setupSimulator(scene, asset, renderer, appData) {
   arcSlider.getParameter('GlobalXfo').setValue(xfo)
 
   arcSlider.getParameter('Color').setValue(primaryColor)
-  arcSlider.getParameter('Handle Radius').setValue(0.013)
-  arcSlider.getParameter('Arc Radius').setValue(0.23)
-  arcSlider.getParameter('Arc Angle').setValue(0.7)
+  arcSlider.getParameter('HandleRadius').setValue(0.013)
+  arcSlider.getParameter('ArcRadius').setValue(0.23)
+  arcSlider.getParameter('ArcAngle').setValue(0.7)
 
   let releaseBrakeId
   const releaseBrake = () => {

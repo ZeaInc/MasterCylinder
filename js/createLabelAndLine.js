@@ -37,7 +37,7 @@ function createLabelAndLine(labelData) {
   labelImage.getParameter('outlineColor').setValue(outlineColor)
   labelImage.getParameter('fontSize').setValue(24)
   labelImage.getParameter('borderRadius').setValue(15)
-  labelImage.getParameter('margin').setValue(1)
+  labelImage.getParameter('margin').setValue(14)
   if (width) labelImage.getParameter('width').setValue(width)
 
   const billboard = new BillboardItem('Label', labelImage)
@@ -59,7 +59,7 @@ function createLabelAndLine(labelData) {
   ballXfo.sc.set(ballRadius)
   ballItem.getParameter('LocalXfo').setValue(ballXfo)
   // billboard.addChild(ballItem, true);
-  const aimOp = Registry.constructClass('AimOperator')
+  const aimOp = new AimOperator()
   aimOp.getParameter('Stretch').setValue(1.0)
   aimOp.getInput('Target').setParam(ballItem.getParameter('GlobalXfo'))
   // const proxyOp = new RouterOperator('')
@@ -72,7 +72,7 @@ function createLabelAndLine(labelData) {
   billboard.addChild(lineItem, false)
   ballItem.addChild(billboard, true)
 
-  ballItem.on('mouseDown', () => {
+  ballItem.on('pointerDown', () => {
     ballColor.a = 0.15
     labelBallMaterial.getParameter('BaseColor').setValue(ballColor)
   })
