@@ -1,7 +1,8 @@
 ﻿import { createLabelAndLine } from './createLabelAndLine.js'
-const { Vec3, Color, Xfo, TreeItem, Group, Material } = window.zeaEngine
+const { Vec3, Color, Xfo, TreeItem, SelectionSet, Material } = window.zeaEngine
 const { ExplodePartsOperator } = window.zeaKinematics
 const { PlanarMovementHandle } = window.zeaUx
+import { resolveItems } from './resolveItems.js'
 
 // https://material.io/design/color/#tools-for-picking-colors
 // Yellow 50
@@ -47,12 +48,12 @@ function setupIdentification(scene, asset, renderer, appData) {
 
   //////////////////////////////////////////////////////////////
   // State 3
-  const boosterAndPedalGroup = new Group('boosterAndPedalGroup')
+  const boosterAndPedalGroup = new SelectionSet('boosterAndPedalGroup')
   // boosterAndPedalGroup.getParameter('Highlighted').setValue(true);
   asset.addChild(boosterAndPedalGroup)
 
   // asset.once('loaded', () => {
-  boosterAndPedalGroup.resolveItems([
+  resolveItems(asset, boosterAndPedalGroup, [
     ['.', 'bacia_1.1'],
     ['.', 'bacia_2.1'],
     ['.', 'disco_dinamico'],
@@ -77,7 +78,7 @@ function setupIdentification(scene, asset, renderer, appData) {
   // })
 
   const explodedPartsOp = new ExplodePartsOperator('ExplodeParts')
-  asset.addChild(explodedPartsOp)
+  // asset.addChild(explodedPartsOp)
   explodedPartsOp.getParameter('Dist').setValue(0.5)
   explodedPartsOp.getParameter('Cascade').setValue(true)
   const parts = explodedPartsOp.getParameter('Parts')
@@ -87,117 +88,117 @@ function setupIdentification(scene, asset, renderer, appData) {
   const explodeTopDir = new Vec3(0, 0, 0.4)
 
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Anel Trava', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.9', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.11', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Secundario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 1.4)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola2.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primaria2', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola1.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   // {
-  //   const part = parts.addElement()
+  //   const part = explodedPartsOp.addPart()
   //   part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'bucha_freio', 'GlobalXfo']))
   //   part.getParameter('Axis').setValue(explodeFrontSideDir)
   //   part.getParameter('Stage').setValue(11)
   // }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeFrontSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeBackSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.2', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeFrontSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.3', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeBackSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.13', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(9)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'tanque_fluido.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(13)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(13)

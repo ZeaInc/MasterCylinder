@@ -8,13 +8,16 @@ const {
   EulerAngles,
   BooleanParameter,
   NumberParameter,
+  ColorParameter,
   XfoParameter,
   OperatorInput,
   OperatorOutput,
   Operator,
   TreeItem,
   Material,
-  Group,
+  LinesMaterial,
+  BaseGroup,
+  KinematicGroup,
   SelectionSet,
   Circle,
   GeomItem,
@@ -23,6 +26,8 @@ const {
   OperatorOutputMode,
 } = window.zeaEngine
 
+const socketMaterial = new LinesMaterial('LocatorMaterial')
+socketMaterial.baseColorParam.value = new Color(1, 0, 0)
 const circle = new Circle()
 
 const PlugMode = {
@@ -41,18 +46,23 @@ class SocketItem extends TreeItem {
     this.connectedPlug = null
     this.connectedPlugMode = null
     this.dependentSockets = []
-    this.addParameter(new NumberParameter('Size', 0.2))
-    this.addParameter(new NumberParameter('Radius', 0.05))
-    this.addParameter(new NumberParameter('SlideDist', 0.05))
+    this.SizeParam = new NumberParameter('Size', 0.2)
+    this.RadiusParam = new NumberParameter('Radius', 0.05)
+    this.SlideDistParam = new NumberParameter('SlideDist', 0.05)
     // Whther the item can be rotated in place and still fit.
-    this.addParameter(new NumberParameter('RadialConstraint', Math.PI * 2))
-    this.addParameter(new NumberParameter('AxialConstraint', Math.PI * 0.2))
-    this.addParameter(new BooleanParameter('AxialFlip', true))
+    this.RadialConstraintParam = new NumberParameter('RadialConstraint', Math.PI * 2)
+    this.AxialConstraintParam = new NumberParameter('AxialConstraint', Math.PI * 0.2)
+    this.AxialFlipParam = new BooleanParameter('AxialFlip', true)
 
+    this.addParameter(this.SizeParam)
+    this.addParameter(this.RadiusParam)
+    this.addParameter(this.SlideDistParam)
+    this.addParameter(this.RadialConstraintParam)
+    this.addParameter(this.AxialConstraintParam)
+    this.addParameter(this.AxialFlipParam)
     if (display == true) {
-      const locatorMaterial = new Material('LocatorMaterial', 'LinesShader')
-      const startLocator = new LocatorItem('startLocator', 0.2, locatorMaterial)
-      const endLocator = new GeomItem('endLocator', circle, locatorMaterial)
+      const startLocator = new LocatorItem('startLocator', 0.2, socketMaterial)
+      const endLocator = new GeomItem('endLocator', circle, socketMaterial)
       const updateIcon = () => {
         startLocator.getParameter('Size').setValue(this.getParameter('Size').getValue())
         const endlocalXfoParam = endLocator.getParameter('LocalXfo')
@@ -110,13 +120,13 @@ class SocketItem extends TreeItem {
     return this.connectedPlugMode == PlugMode.CONNECTED
   }
 
-  // __bindItem(item, index) {
-  //   super.__bindItem(item, index)
+  // bindItem(item, index) {
+  //   super.bindItem(item, index)
   //   item.holdProxy = this;
   // }
 
-  // __unbindItem(item, index) {
-  //   super.__unbindItem(item, index)
+  // unbindItem(item, index) {
+  //   super.unbindItem(item, index)
   //   if (item.holdProxy == this)
   //     item.holdProxy = null;
   // }
@@ -141,13 +151,35 @@ class PlugOp extends Operator {
     }
   }
 }
+const plugMaterial = new LinesMaterial('LocatorMaterial')
+plugMaterial.baseColorParam.value = new Color(0, 0, 1)
 
-class PlugItem extends Group {
+class PlugItem extends KinematicGroup {
   constructor(name, display) {
     super(name)
 
+    // ///////////////////////////////////////////////////////
+    // From SelectionSet
+    this.highlightedParam = new BooleanParameter('Highlighted', false)
+    this.highlightColorParam = new ColorParameter('HighlightColor', new Color(0.5, 0.5, 1))
+    this.highlightFillParam = new NumberParameter('HighlightFill', 0.0, [0, 1])
+
+    this.addParameter(this.highlightedParam)
+    this.highlightedParam.on('valueChanged', () => {
+      this.updateHighlight()
+    })
+    this.addParameter(this.highlightColorParam)
+    this.highlightColorParam.on('valueChanged', (event) => {
+      this.updateHighlight()
+    })
+    this.addParameter(this.highlightFillParam)
+    this.highlightFillParam.on('valueChanged', () => {
+      this.updateHighlight()
+    })
+    // ///////////////////////////////////////////////////////
+
     // we explicitly position the socket
-    this.getParameter('InitialXfoMode').setValue(Group.INITIAL_XFO_MODES.manual)
+    this.getParameter('InitialXfoMode').setValue(KinematicGroup.INITIAL_XFO_MODES.manual)
 
     this.sockets = []
     this.pairedSocket
@@ -160,9 +192,9 @@ class PlugItem extends Group {
       if (!circle) {
         circle = new Circle()
       }
-      const locatorMaterial = new Material('LocatorMaterial', 'LinesShader')
-      const startLocator = new LocatorItem('startLocator', 0.2, locatorMaterial)
-      const endLocator = new LocatorItem('endLocator', 0.2, locatorMaterial)
+
+      const startLocator = new LocatorItem('startLocator', 0.2, plugMaterial)
+      const endLocator = new LocatorItem('endLocator', 0.2, plugMaterial)
       const updateIcon = () => {
         startLocator.getParameter('Size').setValue(this.getParameter('Size').getValue())
         endLocator.getParameter('Size').setValue(this.getParameter('Size').getValue())
@@ -173,7 +205,7 @@ class PlugItem extends Group {
         endlocalXfoParam.setValue(endXfo)
       }
 
-      // const locator = new LocatorItem("locator", 0.2, locatorMaterial)
+      // const locator = new LocatorItem("locator", 0.2, plugMaterial)
       // this.addChild(locator, false)
       // const updateIcon = () => {
       //   locator.getParameter("Size").setValue(this.getParameter("Size").getValue());
@@ -362,14 +394,38 @@ class PlugItem extends Group {
     this.getParameter('Highlighted').setValue(false)
   }
 
-  __bindItem(item, index) {
-    super.__bindItem(item, index)
+  bindItem(item, index) {
+    super.bindItem(item, index)
     item.holdProxy = this
   }
 
-  __unbindItem(item, index) {
-    super.__unbindItem(item, index)
+  unbindItem(item, index) {
+    super.unbindItem(item, index)
     if (item.holdProxy == this) item.holdProxy = null
+  }
+
+  // ///////////////////////////////////////////////////////
+  // From SelectionSet
+  /**
+   * The updateHighlight method.
+   * @private
+   */
+  updateHighlight() {
+    let highlighted = false
+    let color
+    if (this.highlightedParam.value || this.isSelected()) {
+      highlighted = true
+      color = this.highlightColorParam.value
+      color.a = this.highlightFillParam.value
+    }
+
+    const key = 'groupItemHighlight' + this.getId()
+    Array.from(this.itemsParam.value).forEach((item) => {
+      if (item instanceof TreeItem) {
+        if (highlighted) item.addHighlight(key, color, true)
+        else item.removeHighlight(key, true)
+      }
+    })
   }
 }
 

@@ -44,7 +44,7 @@ const camera = renderer.getViewport().getCamera()
 const position = new Vec3({ x: 0.86471, y: 0.87384, z: 0.18464 })
 const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
 camera.setPositionAndTarget(position, target)
-scene.getSettings().getParameter('BackgroundColor').setValue(new Color(0.8, 0.8, 0.8))
+renderer.getViewport().backgroundColorParam.setValue(new Color(0.8, 0.8, 0.8))
 
 // hack to fix compatibility with zea-statemachine
 camera.getTargetPostion = camera.getTargetPosition

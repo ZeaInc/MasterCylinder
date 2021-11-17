@@ -2,6 +2,7 @@
 const {
   Ray,
   Vec3,
+  Vec4,
   Color,
   Xfo,
   Quat,
@@ -13,13 +14,16 @@ const {
   OperatorOutput,
   Operator,
   TreeItem,
-  Group,
+  CuttingPlane,
+  KinematicGroup,
   Registry,
   RouterOperator,
   OperatorOutputMode,
 } = window.zeaEngine
 const { AimOperator } = window.zeaKinematics
 const { ArcSlider } = window.zeaUx
+
+import { resolveItems } from './resolveItems.js'
 
 class RailsOperator extends Operator {
   /**
@@ -99,12 +103,17 @@ function setupSimulator(scene, asset, renderer, appData) {
 
   const cutAway = true
   if (cutAway) {
-    const cutAwayGroup = new Group('cutAwayGroup')
-    cutAwayGroup.getParameter('CutPlaneNormal').setValue(new Vec3(1, 0, 0))
-    cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
+    const cutAwayGroup = new CuttingPlane('cutAwayGroup')
+    // cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, -0.2))
+    // cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
+
+    const xfo = new Xfo()
+    xfo.ori.setFromAxisAndAngle(new Vec3(0, 1, 0), Math.PI * 0.5)
+    cutAwayGroup.localXfoParam.value = xfo
+
     asset.addChild(cutAwayGroup)
 
-    cutAwayGroup.resolveItems([
+    resolveItems(asset, cutAwayGroup, [
       ['.', 'bacia_1.1'],
       ['.', 'bacia_2.1'],
       ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
@@ -118,8 +127,10 @@ function setupSimulator(scene, asset, renderer, appData) {
     ])
 
     cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
-    cutAwayGroup.getParameter('CutPlaneDist').setValue(0.0)
+    // cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, 0))
+    // cutAwayGroup.getParameter('CutPlaneDist').setValue(0.0)
     // cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.1)
+    // cutAwayGroup.cutPlaneParam.value = new Vec4(1, 0, 0, -0.1)
 
     // let value = -0.2;
     // setInterval(()=> {
@@ -185,7 +196,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     locatorItem.getParameter('Visible').setValue(locatorVisible)
     arcSlider.handle.addChild(locatorItem)
 
-    const pedalGroup = new Group('pedalGroup')
+    const pedalGroup = new KinematicGroup('pedalGroup')
     pedalGroup.addItem(asset.resolvePath(['.', 'Pedal_de freio.1']))
     locatorItem.addChild(pedalGroup)
   }
@@ -204,9 +215,9 @@ function setupSimulator(scene, asset, renderer, appData) {
     aimOp.getParameter('Axis').setValue(3)
     aimOp.getInput('Target').setParam(target0LocatorItem.getParameter('GlobalXfo'))
     aimOp.getOutputByIndex(0).setParam(pushRodLocatorItem.getParameter('GlobalXfo'))
-    pushRodLocatorItem.addChild(aimOp)
+    // pushRodLocatorItem.addChild(aimOp)
 
-    const pushRodGroup = new Group('pushRodGroup')
+    const pushRodGroup = new KinematicGroup('pushRodGroup')
     pushRodLocatorItem.addChild(pushRodGroup)
     pushRodGroup.addItem(asset.resolvePath(['.', 'haste_acionamento']))
   }
@@ -225,11 +236,11 @@ function setupSimulator(scene, asset, renderer, appData) {
     railsOp.getParameter('RailXfo').setValue(xfo)
     railsOp.getParameter('Lock Rotation To Rail').setValue(true)
     railsOp.getOutputByIndex(0).setParam(railLocatorItem.getParameter('GlobalXfo'))
-    railLocatorItem.addChild(railsOp, false)
+    // railLocatorItem.addChild(railsOp, false)
 
-    const railGroup = new Group('railGroup')
+    const railGroup = new KinematicGroup('railGroup')
     railGroup.setSearchRoot(asset)
-    railGroup.resolveItems([
+    resolveItems(asset, railGroup, [
       ['.', 'haste_vacuo'],
       ['.', 'SJ Cilindro MESTRE', 'Secundario'],
       ['.', 'SJ Cilindro MESTRE', 'secundaria.1'],
@@ -271,11 +282,11 @@ function setupSimulator(scene, asset, renderer, appData) {
     secondaryPistonOperator.getInput('PistonXfo').setParam(locatorItem0.getParameter('GlobalXfo'))
     secondaryPistonOperator.getInput('EndXfo').setParam(locatorItem3.getParameter('GlobalXfo'))
     secondaryPistonOperator.getOutputByIndex(0).setParam(secondaryPistonLocator.getParameter('GlobalXfo'))
-    asset.addChild(secondaryPistonOperator)
+    // asset.addChild(secondaryPistonOperator)
 
-    const secondaryPistonGroup = new Group('secondaryPistonGroup')
+    const secondaryPistonGroup = new KinematicGroup('secondaryPistonGroup')
     secondaryPistonGroup.setSearchRoot(asset)
-    secondaryPistonGroup.resolveItems([
+    resolveItems(asset, secondaryPistonGroup, [
       ['.', 'SJ Cilindro MESTRE', 'primario1'],
       ['.', 'SJ Cilindro MESTRE', 'primaria2'],
       ['.', 'SJ Cilindro MESTRE', 'secundaria'],
@@ -308,11 +319,11 @@ function setupSimulator(scene, asset, renderer, appData) {
       aimOp.getParameter('Axis').setValue(3)
       aimOp.getInput('Target').setParam(locatorItem3.getParameter('GlobalXfo'))
       aimOp.getOutputByIndex(0).setParam(locatorItem2.getParameter('GlobalXfo'))
-      locatorItem2.addChild(aimOp)
+      // locatorItem2.addChild(aimOp)
       aimOp.resetStretchRefDist()
     }
 
-    const endSpringGroup = new Group('endSpringGroup')
+    const endSpringGroup = new KinematicGroup('endSpringGroup')
     endSpringGroup.addItem(spring)
     locatorItem2.addChild(endSpringGroup)
 
@@ -325,11 +336,11 @@ function setupSimulator(scene, asset, renderer, appData) {
       aimOp.getParameter('Axis').setValue(2)
       aimOp.getInput('Target').setParam(locatorItem0.getParameter('GlobalXfo'))
       aimOp.getOutputByIndex(0).setParam(locatorItem1.getParameter('GlobalXfo'))
-      locatorItem1.addChild(aimOp)
+      // locatorItem1.addChild(aimOp)
       aimOp.resetStretchRefDist()
     }
 
-    const primaryPistonSpringGroup = new Group('primaryPistonSpringGroup')
+    const primaryPistonSpringGroup = new KinematicGroup('primaryPistonSpringGroup')
     primaryPistonSpringGroup.addItem(asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'mola2.1']))
     locatorItem1.addChild(primaryPistonSpringGroup)
   }
@@ -360,9 +371,9 @@ function setupSimulator(scene, asset, renderer, appData) {
     aimOp.getInput('Target').setParam(boosterSpringLocator0.getParameter('GlobalXfo'))
     aimOp.getOutputByIndex(0).setParam(boosterSpringLocator1.getParameter('GlobalXfo'))
     aimOp.resetStretchRefDist()
-    boosterSpringLocator1.addChild(aimOp)
+    // boosterSpringLocator1.addChild(aimOp)
 
-    const boosterSpringGroup = new Group('boosterSpringGroup')
+    const boosterSpringGroup = new KinematicGroup('boosterSpringGroup')
     // boosterSpringGroup.getParameter("InitialXfoMode").setValue(0)
     boosterSpringLocator1.addChild(boosterSpringGroup, false)
     boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12.1']))

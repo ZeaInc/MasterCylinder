@@ -1,8 +1,20 @@
 ﻿import { createLabelAndLine } from './createLabelAndLine.js'
-const { Vec3, Color, BooleanParameter, TreeItem, Group, labelManager } = window.zeaEngine
+const {
+  Vec3,
+  Color,
+  BooleanParameter,
+  TreeItem,
+  CuttingPlane,
+  SelectionSet,
+  Xfo,
+  labelManager,
+  Vec4,
+  NumberParameter,
+} = window.zeaEngine
 const { ExplodePartsOperator } = window.zeaKinematics
 const { State, StateMachine, KeyPressedEvent, SwitchState, SetParameterValue, SetCameraPositionAndTarget } =
   window.zeaStateMachine
+import { resolveItems } from './resolveItems.js'
 
 // https://material.io/design/color/#tools-for-picking-colors
 // Yellow 50
@@ -51,7 +63,9 @@ function setupLearning(scene, asset, renderer) {
       // labelTree.addChild(billboard, false);
 
       ballItem.getParameter('Visible').setValue(false)
-      billboard.getParameter('Visible').setValue(false)
+      billboard.imageParam.value.on('loaded', () => {
+        billboard.getParameter('Visible').setValue(false)
+      })
       labelTree.addChild(ballItem, true)
 
       ballItem.on('pointerDown', () => {
@@ -96,13 +110,16 @@ function setupLearning(scene, asset, renderer) {
 
   // asset.getParameter('CutPlaneColor').setValue(new Color(0, 0, 0))
   // asset.getParameter('CutPlaneNormal').setValue(new Vec3(1, 0, 0))
-  const cutAwayGroup = new Group('cutAwayGroup')
-  cutAwayGroup.getParameter('CutPlaneNormal').setValue(new Vec3(1, 0, 0))
-  cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
+  const cutAwayGroup = new CuttingPlane('cutAwayGroup')
+  // cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, -0.2))
+  const xfo = new Xfo()
+  xfo.ori.setFromAxisAndAngle(new Vec3(0, 1, 0), Math.PI * 0.5)
+  cutAwayGroup.localXfoParam.value = xfo
+
   asset.addChild(cutAwayGroup)
 
   // asset.on('loaded', () => {
-  cutAwayGroup.resolveItems([
+  resolveItems(asset, cutAwayGroup, [
     ['.', 'bacia_1.1'],
     ['.', 'bacia_2.1'],
     ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
@@ -118,12 +135,14 @@ function setupLearning(scene, asset, renderer) {
     // ['.', 'SJ Cilindro MESTRE', 'anel_borracha.1'],
   ])
   // })
-  cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
-  cutAwayGroup.getParameter('CutPlaneDist').setValue(0.0)
+  cutAwayGroup.cutAwayEnabledParam.setValue(true)
+  cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, 0))
+
+  cutAwayGroup.addParameter(new NumberParameter('CutPlaneDist', 0.0))
 
   // if (state == 2) {
   //   asset.on('loaded', () => {
-  //     cutAwayGroup.getParameter('CutAwayEnabled').setValue(true);
+  //     cutAwayGroup.cutAwayEnabledParam.setValue(true);
   //     const cutDist = cutAwayGroup.getParameter('CutPlaneDist');
   //     let cutAmount = -0.2;
   //     cutDist.setValue(cutAmount)
@@ -141,12 +160,12 @@ function setupLearning(scene, asset, renderer) {
   // }
   //////////////////////////////////////////////////////////////
   // State 3
-  const boosterAndPedalGroup = new Group('boosterAndPedalGroup')
+  const boosterAndPedalGroup = new SelectionSet('boosterAndPedalGroup')
   // boosterAndPedalGroup.getParameter('Highlighted').setValue(true);
   asset.addChild(boosterAndPedalGroup)
 
   // asset.on('loaded', () => {
-  boosterAndPedalGroup.resolveItems([
+  resolveItems(asset, boosterAndPedalGroup, [
     ['.', 'bacia_1.1'],
     ['.', 'bacia_2.1'],
     ['.', 'disco_dinamico'],
@@ -173,7 +192,7 @@ function setupLearning(scene, asset, renderer) {
   // })
 
   const explodedPartsOp = new ExplodePartsOperator('ExplodeParts')
-  asset.addChild(explodedPartsOp)
+  // asset.addChild(explodedPartsOp)
   explodedPartsOp.getParameter('Dist').setValue(0.5)
   explodedPartsOp.getParameter('Cascade').setValue(true)
   const parts = explodedPartsOp.getParameter('Parts')
@@ -183,111 +202,111 @@ function setupLearning(scene, asset, renderer) {
   const explodeTopDir = new Vec3(0, 0, 0.4)
 
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Anel Trava', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.9', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.11', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Secundario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 1.4)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola2.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundaria', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.75)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() - 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primaria2', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
     part.getParameter('Stage').setValue(part.getParameter('Stage').getValue() + 0.25)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'mola1.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeDir)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeFrontSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.2', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeFrontSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeBackSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', '1.3', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeBackSideDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'Part1.13', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(9)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'tanque_fluido.1', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(11)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'secundario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(13)
   }
   {
-    const part = parts.addElement()
+    const part = explodedPartsOp.addPart()
     part.getOutput().setParam(asset.resolvePath(['SJ Cilindro MESTRE', 'primario', 'GlobalXfo']))
     part.getParameter('Axis').setValue(explodeTopDir)
     part.getParameter('Stage').setValue(13)
@@ -321,7 +340,7 @@ function setupLearning(scene, asset, renderer) {
   // })
 
   const stateMachine = new StateMachine()
-  asset.addChild(stateMachine)
+  // asset.addChild(stateMachine)
 
   {
     const stage1State = new State('stage1State')
@@ -401,7 +420,7 @@ function setupLearning(scene, asset, renderer) {
     const EnableCutaway = new SetParameterValue('EnableCutaway')
     stage2State.addActivationAction(EnableCutaway)
     EnableCutaway.getParameter('InterpTime').setValue(0.0)
-    EnableCutaway.setParam(cutAwayGroup.getParameter('CutAwayEnabled'))
+    EnableCutaway.setParam(cutAwayGroup.cutAwayEnabledParam)
     EnableCutaway.getParameter('Value').setValue(true)
 
     const CutAwayMasterCylinder = new SetParameterValue('CutAwayMasterCylinder')
@@ -435,7 +454,7 @@ function setupLearning(scene, asset, renderer) {
     const DisableCutaway = new SetParameterValue('DisableCutaway')
     stage2State.addDeactivationAction(DisableCutaway)
     DisableCutaway.getParameter('InterpTime').setValue(0.0)
-    DisableCutaway.setParam(cutAwayGroup.getParameter('CutAwayEnabled'))
+    DisableCutaway.setParam(cutAwayGroup.cutAwayEnabledParam)
     DisableCutaway.getParameter('Value').setValue(false)
 
     const UnCutAwayMasterCylinder = new SetParameterValue('UnCutAwayMasterCylinder')

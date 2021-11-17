@@ -1,5 +1,15 @@
-﻿const { Vec3, Quat, Xfo, EulerAngles, Group, Material, Color } = window.zeaEngine
-const { GLCADPass, CADAsset } = window.zeaCad
+﻿const { Vec3, Quat, Xfo, EulerAngles, MaterialGroup, Material, Color } = window.zeaEngine
+const { CADAsset } = window.zeaCad
+
+import { resolveItems } from './resolveItems.js'
+
+const modifyParams = (material, params, shaderName) => {
+  material.setShaderName(shaderName)
+  for (let key in params) {
+    const param = material.getParameter(key)
+    param.value = params[key]
+  }
+}
 
 function loadAsset() {
   const asset = new CADAsset()
@@ -18,10 +28,11 @@ function loadAsset() {
   // https://www.quadratec.com/p/mopar/brake-master-cylinder-booster-jk-dana-60-axle-P5160050
   // https://righttorisesuperpac.org/symptoms-of-a-bad-brake-booster/
 
-  const blackPlasticGroup = new Group('blackPlasticGroup')
+  const blackPlasticGroup = new MaterialGroup('blackPlasticGroup')
   {
     const material = new Material('blackPlastic')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.01, 0.01, 0.01),
         Metallic: 0.0,
@@ -34,10 +45,11 @@ function loadAsset() {
     asset.addChild(blackPlasticGroup)
   }
 
-  const blackRubberGroup = new Group('blackRubberGroup')
+  const blackRubberGroup = new MaterialGroup('blackRubberGroup')
   {
     const material = new Material('blackRubber')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.01, 0.01, 0.01),
         Metallic: 0.0,
@@ -50,10 +62,11 @@ function loadAsset() {
     asset.addChild(blackRubberGroup)
   }
 
-  const whitePlasticGroup = new Group('whitePlasticGroup')
+  const whitePlasticGroup = new MaterialGroup('whitePlasticGroup')
   {
     const material = new Material('whitePlastic')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.98, 0.98, 0.88),
         Metallic: 0.0,
@@ -66,10 +79,11 @@ function loadAsset() {
     asset.addChild(whitePlasticGroup)
   }
 
-  const yellowPlasticGroup = new Group('yellowPlasticGroup')
+  const yellowPlasticGroup = new MaterialGroup('yellowPlasticGroup')
   {
     const material = new Material('yellowPlastic')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color('#F0E68C'),
         Metallic: 0.0,
@@ -82,10 +96,11 @@ function loadAsset() {
     asset.addChild(yellowPlasticGroup)
   }
 
-  const shinyMetalGroup = new Group('shinyMetalGroup')
+  const shinyMetalGroup = new MaterialGroup('shinyMetalGroup')
   {
     const material = new Material('shinyMetal')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.65, 0.65, 0.65),
         Metallic: 0.75,
@@ -98,10 +113,11 @@ function loadAsset() {
     asset.addChild(shinyMetalGroup)
   }
 
-  const darkGreyMetalGroup = new Group('darkGreyMetalGroup')
+  const darkGreyMetalGroup = new MaterialGroup('darkGreyMetalGroup')
   {
     const material = new Material('darkGreyMetal')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.45, 0.45, 0.45),
         Metallic: 0.65,
@@ -114,10 +130,11 @@ function loadAsset() {
     asset.addChild(darkGreyMetalGroup)
   }
 
-  const blackMetalGroup = new Group('blackMetalGroup')
+  const blackMetalGroup = new MaterialGroup('blackMetalGroup')
   {
     const material = new Material('blackMetal')
-    material.modifyParams(
+    modifyParams(
+      material,
       {
         BaseColor: new Color(0.0, 0.0, 0.0),
         Metallic: 0.65,
@@ -141,12 +158,12 @@ function loadAsset() {
     // }
     // logTreeItem(asset, 0)
 
-    blackPlasticGroup.resolveItems([
+    resolveItems(asset, blackPlasticGroup, [
       ['.', 'SJ Cilindro MESTRE', 'Part1.13'],
       ['.', 'tubo_vacuo.1'],
     ])
 
-    blackRubberGroup.resolveItems([
+    resolveItems(asset, blackRubberGroup, [
       ['.', 'SJ Cilindro MESTRE', 'primaria2'], // Floating Ram end seal
       ['.', 'SJ Cilindro MESTRE', 'secundaria'], // Floating Ram end seal
       ['.', 'SJ Cilindro MESTRE', 'secundaria.1'], // Ram end Seal
@@ -158,16 +175,16 @@ function loadAsset() {
       ['.', 'bucha_vacuo.1'], // Booster seal
     ])
 
-    whitePlasticGroup.resolveItems([['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1']])
+    resolveItems(asset, whitePlasticGroup, [['.', 'SJ Cilindro MESTRE', 'tanque_fluido.1']])
 
-    yellowPlasticGroup.resolveItems([
+    resolveItems(asset, yellowPlasticGroup, [
       ['.', 'SJ Cilindro MESTRE', '1.1'],
       ['.', 'SJ Cilindro MESTRE', '1.2'],
       ['.', 'SJ Cilindro MESTRE', '1.3'],
       ['.', 'SJ Cilindro MESTRE', '1'],
     ])
 
-    shinyMetalGroup.resolveItems([
+    resolveItems(asset, shinyMetalGroup, [
       ['.', 'mola12.1'], //  Big spring
       ['.', 'SJ Cilindro MESTRE', 'mola2.1'], //  Big spring
       ['.', 'SJ Cilindro MESTRE', 'mola1.1'],
@@ -181,7 +198,7 @@ function loadAsset() {
       ['.', 'mola11.1'],
     ])
 
-    darkGreyMetalGroup.resolveItems([
+    resolveItems(asset, darkGreyMetalGroup, [
       ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
       ['.', 'prato.1'],
       ['.', 'Part1.8'],
@@ -197,7 +214,7 @@ function loadAsset() {
       ['.', 'SJ Cilindro MESTRE', 'Part1.9'],
     ])
 
-    blackMetalGroup.resolveItems([
+    resolveItems(asset, blackMetalGroup, [
       ['.', 'bacia_1.1'],
       ['.', 'bacia_2.1'],
     ])

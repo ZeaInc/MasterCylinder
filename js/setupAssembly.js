@@ -1,6 +1,7 @@
 ﻿import { SocketItem, PlugItem, PlugMode } from './SocketAndPlug.js'
-const { Vec3, Color, Xfo, Group } = window.zeaEngine
+const { Vec3, Color, Xfo, KinematicGroup, CuttingPlane, SelectionSet } = window.zeaEngine
 const { PlanarMovementHandle } = window.zeaUx
+import { resolveItems } from './resolveItems.js'
 
 const displayDebug = false
 function setupPlugAndSocket(
@@ -71,14 +72,14 @@ function setupAssembly(scene, asset, renderer, appData) {
   const target = new Vec3({ x: 0.02931, y: -0.12152, z: 0.04089 })
   renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 
-  const boosterAndPedalGroup = new Group('boosterAndPedalGroup')
+  const boosterAndPedalGroup = new SelectionSet('boosterAndPedalGroup')
   // boosterAndPedalGroup.getParameter('Highlighted').setValue(true);
   boosterAndPedalGroup.getParameter('Visible').setValue(false)
   asset.addChild(boosterAndPedalGroup)
 
   // asset.on('loaded', () => {
 
-  boosterAndPedalGroup.resolveItems([
+  resolveItems(asset, boosterAndPedalGroup, [
     ['.', 'bacia_1.1'],
     ['.', 'bacia_2.1'],
     ['.', 'disco_dinamico'],
@@ -110,12 +111,14 @@ function setupAssembly(scene, asset, renderer, appData) {
 
   // const applyCutaway = false
   // if (applyCutaway) {
-  const cutAwayGroup = new Group('cutAwayGroup')
-  cutAwayGroup.getParameter('CutPlaneNormal').setValue(new Vec3(1, 0, 0))
-  cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
+  const cutAwayGroup = new CuttingPlane('cutAwayGroup')
+  // cutAwayGroup.cutPlaneParam.setValue(new Vec3(1, 0, 0, -0.2))
+  const xfo = new Xfo()
+  xfo.ori.setFromAxisAndAngle(new Vec3(0, 1, 0), Math.PI * 0.5)
+  cutAwayGroup.localXfoParam.value = xfo
   asset.addChild(cutAwayGroup)
 
-  cutAwayGroup.resolveItems([
+  resolveItems(asset, cutAwayGroup, [
     // ['.', 'bacia_1.1'],
     // ['.', 'bacia_2.1'],
     ['.', 'SJ Cilindro MESTRE', 'cilindro_mestre.1'],
@@ -128,7 +131,7 @@ function setupAssembly(scene, asset, renderer, appData) {
     // ['.', 'Symmetry of Part1.8.2'],
   ])
 
-  cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
+  cutAwayGroup.cutAwayEnabledParam.setValue(false)
   // asset.getParameter('CutPlaneDist').setValue(0.0)
   // }
 
@@ -136,7 +139,7 @@ function setupAssembly(scene, asset, renderer, appData) {
   {
     let masterCylinderGroup
     {
-      masterCylinderGroup = new Group('masterCylinderGroup')
+      masterCylinderGroup = new KinematicGroup('masterCylinderGroup')
       const item = asset.resolvePath(['SJ Cilindro MESTRE', 'cilindro_mestre.1'])
       masterCylinderGroup.addItem(item)
       masterCylinderGroup.addItem(asset.resolvePath(['SJ Cilindro MESTRE', '1.1']))
@@ -516,18 +519,18 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
     // hilightAllPlugs(1000);
     const applyCutaway = (delay) => {
-      cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
-      const cutDist = cutAwayGroup.getParameter('CutPlaneDist')
-      let cutAmount = -0.2
-      cutDist.setValue(cutAmount)
-      const timerCallback = () => {
-        cutAmount += 0.002
-        cutDist.setValue(cutAmount)
-        if (cutAmount < 0.0) {
-          setTimeout(timerCallback, 20) // Sample at 50fps.
-        }
-      }
-      setTimeout(timerCallback, delay) // half second delay
+      cutAwayGroup.cutAwayEnabledParam.setValue(true)
+      // const cutDist = cutAwayGroup.getParameter('CutPlaneDist')
+      // let cutAmount = -0.2
+      // cutDist.setValue(cutAmount)
+      // const timerCallback = () => {
+      //   cutAmount += 0.002
+      //   cutDist.setValue(cutAmount)
+      //   if (cutAmount < 0.0) {
+      //     setTimeout(timerCallback, 20) // Sample at 50fps.
+      //   }
+      // }
+      // setTimeout(timerCallback, delay) // half second delay
     }
     let index = 0
     let plugCout = 0
