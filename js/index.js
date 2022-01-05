@@ -46,6 +46,11 @@ const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
 camera.setPositionAndTarget(position, target)
 renderer.getViewport().backgroundColorParam.setValue(new Color(0.8, 0.8, 0.8))
 
+const cameraManipulator = renderer.getViewport().getManipulator()
+// Make sure a double tap is required to aim the focus.
+cameraManipulator.aimFocusOnTouchTap = 2
+cameraManipulator.aimFocusOnMouseClick = 2
+
 // hack to fix compatibility with zea-statemachine
 camera.getTargetPostion = camera.getTargetPosition
 
