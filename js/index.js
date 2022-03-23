@@ -1,5 +1,4 @@
-﻿const { SystemDesc, Vec3, Color, EnvMap, Scene, GLRenderer, labelManager, PassType } = window.zeaEngine
-const { GLCADPass } = window.zeaCad
+﻿const { Vec3, Color, EnvMap, Scene, GLRenderer, labelManager } = window.zeaEngine
 
 function download(json, filename) {
   function downloadURI(uri, name) {
@@ -46,6 +45,8 @@ const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
 camera.setPositionAndTarget(position, target)
 renderer.getViewport().backgroundColorParam.setValue(new Color(0.8, 0.8, 0.8))
 
+// the HDE image is a bit dark, so brighten up the scene.
+renderer.exposure = 1.5
 const cameraManipulator = renderer.getViewport().getManipulator()
 // Make sure a double tap is required to aim the focus.
 cameraManipulator.aimFocusOnTouchTap = 2
@@ -56,7 +57,6 @@ camera.getTargetPostion = camera.getTargetPosition
 
 const envMap = new EnvMap('envMap')
 envMap.load('data/HDR_029_Sky_Cloudy_Ref.vlenv')
-envMap.setHDRTint(new Color(1.5, 1.5, 1.5, 1))
 scene.setEnvMap(envMap)
 
 //////////////////////////

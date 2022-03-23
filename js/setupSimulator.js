@@ -367,15 +367,15 @@ function setupSimulator(scene, asset, renderer, appData) {
 
     const aimOp = new AimOperator()
     aimOp.getParameter('Stretch').setValue(1)
-    aimOp.getParameter('Axis').setValue(5)
+    aimOp.getParameter('Axis').setValue(2)
     aimOp.getInput('Target').setParam(boosterSpringLocator0.getParameter('GlobalXfo'))
     aimOp.getOutputByIndex(0).setParam(boosterSpringLocator1.getParameter('GlobalXfo'))
     aimOp.resetStretchRefDist()
     // boosterSpringLocator1.addChild(aimOp)
 
     const boosterSpringGroup = new KinematicGroup('boosterSpringGroup')
-    // boosterSpringGroup.getParameter("InitialXfoMode").setValue(0)
     boosterSpringLocator1.addChild(boosterSpringGroup, false)
+    // boosterSpringGroup.getParameter('InitialXfoMode').setValue(KinematicGroup.INITIAL_XFO_MODES.first)
     boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12.1']))
   }
 }

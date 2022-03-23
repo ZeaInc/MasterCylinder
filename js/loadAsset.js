@@ -1,5 +1,5 @@
-﻿const { Vec3, Quat, Xfo, EulerAngles, MaterialGroup, Material, Color } = window.zeaEngine
-const { CADAsset } = window.zeaCad
+﻿const { Xfo, EulerAngles, MaterialGroup, Material, Color, CADAsset } = window.zeaEngine
+// const { CADAsset } = window.zeaCad
 
 import { resolveItems } from './resolveItems.js'
 
