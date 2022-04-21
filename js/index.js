@@ -28,8 +28,11 @@ const renderer = new GLRenderer(document.getElementById('viewport'))
 renderer.setScene(scene)
 // renderer.getViewport().debugGeomShader = true
 // renderer.getViewport().debugHighlightedGeomsBuffer = true
-renderer.highlightOutlineThickness = 1
-// scene.setupGrid(1, 10)
+renderer.outlineThickness = 1
+renderer.highlightOutlineThickness = 2
+
+// Note: to make this data load on safari, we must had some trivial geometry.
+scene.setupGrid(0.002, 10)
 // return;
 
 const urlParams = new URLSearchParams(window.location.search)
