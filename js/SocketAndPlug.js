@@ -159,24 +159,6 @@ class PlugItem extends KinematicGroup {
     super(name)
 
     // ///////////////////////////////////////////////////////
-    // From SelectionSet
-    this.highlightedParam = new BooleanParameter('Highlighted', false)
-    this.highlightColorParam = new ColorParameter('HighlightColor', new Color(0.5, 0.5, 1))
-    this.highlightFillParam = new NumberParameter('HighlightFill', 0.0, [0, 1])
-
-    this.addParameter(this.highlightedParam)
-    this.highlightedParam.on('valueChanged', () => {
-      this.updateHighlight()
-    })
-    this.addParameter(this.highlightColorParam)
-    this.highlightColorParam.on('valueChanged', (event) => {
-      this.updateHighlight()
-    })
-    this.addParameter(this.highlightFillParam)
-    this.highlightFillParam.on('valueChanged', () => {
-      this.updateHighlight()
-    })
-    // ///////////////////////////////////////////////////////
 
     // we explicitly position the socket
     this.getParameter('InitialXfoMode').setValue(KinematicGroup.INITIAL_XFO_MODES.manual)
@@ -402,30 +384,6 @@ class PlugItem extends KinematicGroup {
   unbindItem(item, index) {
     super.unbindItem(item, index)
     if (item.holdProxy == this) item.holdProxy = null
-  }
-
-  // ///////////////////////////////////////////////////////
-  // From SelectionSet
-  /**
-   * The updateHighlight method.
-   * @private
-   */
-  updateHighlight() {
-    let highlighted = false
-    let color
-    if (this.highlightedParam.value || this.isSelected()) {
-      highlighted = true
-      color = this.highlightColorParam.value
-      color.a = this.highlightFillParam.value
-    }
-
-    const key = 'groupItemHighlight' + this.getId()
-    Array.from(this.itemsParam.value).forEach((item) => {
-      if (item instanceof TreeItem) {
-        if (highlighted) item.addHighlight(key, color, true)
-        else item.removeHighlight(key, true)
-      }
-    })
   }
 }
 

@@ -38,7 +38,7 @@ class DOMLabel extends DataImage {
     this.addParameter(new NumberParameter('width', 400))
     this.addParameter(new NumberParameter('borderWidth', 2))
     this.addParameter(new NumberParameter('borderRadius', fontSize * 0.5))
-    this.addParameter(new BooleanParameter('outlineColor', new Color(0, 0, 0)))
+    this.addParameter(new ColorParameter('outlineColor', new Color(0, 0, 0)))
     this.addParameter(new ColorParameter('backgroundColor', new Color('#FBC02D')))
     this.addParameter(new NumberParameter('fontSize', 22))
     this.addParameter(new StringParameter('font', 'Verdana'))

@@ -98,14 +98,14 @@ class PistonOperator extends Operator {
 // Registry.register('PistonOperator', PistonOperator)
 
 function setupSimulator(scene, asset, renderer, appData) {
-  const locatorSizeScale = 0.0
+  const locatorSizeScale = 1.0
   const locatorVisible = true
 
   const cutAway = true
   if (cutAway) {
     const cutAwayGroup = new CuttingPlane('cutAwayGroup')
-    // cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, -0.2))
-    // cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.2)
+    // cutAwayGroup.cutPlaneParam.value = new Vec4(1, 0, 0, -0.2)
+    // cutAwayGroup.getParameter('CutPlaneDist').value = -0.2
 
     const xfo = new Xfo()
     xfo.ori.setFromAxisAndAngle(new Vec3(0, 1, 0), Math.PI * 0.5)
@@ -126,17 +126,17 @@ function setupSimulator(scene, asset, renderer, appData) {
       ['.', 'Symmetry of Part1.8.2'],
     ])
 
-    cutAwayGroup.getParameter('CutAwayEnabled').setValue(true)
-    // cutAwayGroup.cutPlaneParam.setValue(new Vec4(1, 0, 0, 0))
-    // cutAwayGroup.getParameter('CutPlaneDist').setValue(0.0)
-    // cutAwayGroup.getParameter('CutPlaneDist').setValue(-0.1)
+    cutAwayGroup.getParameter('CutAwayEnabled').value = true
+    // cutAwayGroup.cutPlaneParam.value = new Vec4(1, 0, 0, 0)
+    // cutAwayGroup.getParameter('CutPlaneDist').value = 0.0
+    // cutAwayGroup.getParameter('CutPlaneDist').value = -0.1
     // cutAwayGroup.cutPlaneParam.value = new Vec4(1, 0, 0, -0.1)
 
     // let value = -0.2;
     // setInterval(()=> {
     //   value += 0.001;
     //         const smooth_t = Math.smoothStep(0.0, 1.0, value)
-    //   cutAwayGroup.getParameter('CutPlaneDist').setValue(value)
+    //   cutAwayGroup.getParameter('CutPlaneDist').value = value
     // }, 10)
   }
 
@@ -146,9 +146,9 @@ function setupSimulator(scene, asset, renderer, appData) {
   {
     const xfo = new Xfo()
     xfo.tr.set(0.0, 0.0, 0.0)
-    target0LocatorItem.getParameter('GlobalXfo').setValue(xfo)
-    target0LocatorItem.getParameter('Size').setValue(locatorSizeScale * 0.1)
-    target0LocatorItem.getParameter('Visible').setValue(locatorVisible)
+    target0LocatorItem.globalXfoParam.value = xfo
+    target0LocatorItem.sizeParam.value = locatorSizeScale * 0.1
+    target0LocatorItem.visibleParam.value = locatorVisible
 
     scene.getRoot().addChild(target0LocatorItem)
   }
@@ -159,12 +159,12 @@ function setupSimulator(scene, asset, renderer, appData) {
   const q = new Quat()
   q.setFromAxisAndAngle(new Vec3(0, 0, 1), 0.8)
   xfo.ori = xfo.ori.multiply(q)
-  arcSlider.getParameter('GlobalXfo').setValue(xfo)
+  arcSlider.globalXfoParam.value = xfo
 
-  arcSlider.getParameter('Color').setValue(primaryColor)
-  arcSlider.getParameter('HandleRadius').setValue(0.013)
-  arcSlider.getParameter('ArcRadius').setValue(0.23)
-  arcSlider.getParameter('ArcAngle').setValue(0.7)
+  arcSlider.getParameter('Color').value = primaryColor
+  arcSlider.getParameter('HandleRadius').value = 0.013
+  arcSlider.getParameter('ArcRadius').value = 0.23
+  arcSlider.getParameter('ArcAngle').value = 0.7
 
   let releaseBrakeId
   const releaseBrake = () => {
@@ -172,7 +172,7 @@ function setupSimulator(scene, asset, renderer, appData) {
     let value = localXfoParam.getValue()
     const timerCallback = () => {
       value.ori = value.ori.lerp(new Quat(), 0.2)
-      localXfoParam.setValue(value)
+      localXfoParam.value = value
       if (value.ori.getAngle() > 0.01) {
         releaseBrakeId = setTimeout(timerCallback, 20) // Sample at 50fps.
       } else {
@@ -191,9 +191,9 @@ function setupSimulator(scene, asset, renderer, appData) {
 
   {
     const locatorItem = new LocatorItem('BrakePedalLocator')
-    locatorItem.getParameter('GlobalXfo').setValue(xfo)
-    locatorItem.getParameter('Size').setValue(locatorSizeScale * 0.1)
-    locatorItem.getParameter('Visible').setValue(locatorVisible)
+    locatorItem.globalXfoParam.value = xfo
+    locatorItem.sizeParam.value = locatorSizeScale * 0.1
+    locatorItem.visibleParam.value = locatorVisible
     arcSlider.handle.addChild(locatorItem)
 
     const pedalGroup = new KinematicGroup('pedalGroup')
@@ -206,15 +206,15 @@ function setupSimulator(scene, asset, renderer, appData) {
   {
     const xfo = new Xfo()
     xfo.tr.set(0.0, 0.137, 0.0)
-    pushRodLocatorItem.getParameter('GlobalXfo').setValue(xfo)
-    pushRodLocatorItem.getParameter('Size').setValue(locatorSizeScale * 0.05)
-    pushRodLocatorItem.getParameter('Visible').setValue(locatorVisible)
+    pushRodLocatorItem.globalXfoParam.value = xfo
+    pushRodLocatorItem.sizeParam.value = locatorSizeScale * 0.05
+    pushRodLocatorItem.visibleParam.value = locatorVisible
     arcSlider.handle.addChild(pushRodLocatorItem)
 
     const aimOp = new AimOperator()
-    aimOp.getParameter('Axis').setValue(3)
-    aimOp.getInput('Target').setParam(target0LocatorItem.getParameter('GlobalXfo'))
-    aimOp.getOutputByIndex(0).setParam(pushRodLocatorItem.getParameter('GlobalXfo'))
+    aimOp.getParameter('Axis').value = 3
+    aimOp.getInput('Target').setParam(target0LocatorItem.globalXfoParam)
+    aimOp.getOutputByIndex(0).setParam(pushRodLocatorItem.globalXfoParam)
     // pushRodLocatorItem.addChild(aimOp)
 
     const pushRodGroup = new KinematicGroup('pushRodGroup')
@@ -227,61 +227,61 @@ function setupSimulator(scene, asset, renderer, appData) {
     const xfo = new Xfo()
     xfo.tr.set(0.0, -0.03, 0.0)
     xfo.ori.setFromAxisAndAngle(new Vec3(0, 0, 1), -Math.PI * 0.5)
-    railLocatorItem.getParameter('GlobalXfo').setValue(xfo)
-    railLocatorItem.getParameter('Size').setValue(locatorSizeScale * 0.05)
-    railLocatorItem.getParameter('Visible').setValue(locatorVisible)
+    railLocatorItem.globalXfoParam.value = xfo
+    railLocatorItem.sizeParam.value = locatorSizeScale * 0.05
+    railLocatorItem.visibleParam.value = locatorVisible
     pushRodLocatorItem.addChild(railLocatorItem)
 
     const railsOp = new RailsOperator()
-    railsOp.getParameter('RailXfo').setValue(xfo)
-    railsOp.getParameter('Lock Rotation To Rail').setValue(true)
-    railsOp.getOutputByIndex(0).setParam(railLocatorItem.getParameter('GlobalXfo'))
+    railsOp.getParameter('RailXfo').value = xfo
+    railsOp.getParameter('Lock Rotation To Rail').value = true
+    railsOp.getOutputByIndex(0).setParam(railLocatorItem.globalXfoParam)
     // railLocatorItem.addChild(railsOp, false)
 
     const railGroup = new KinematicGroup('railGroup')
     railGroup.setSearchRoot(asset)
     resolveItems(asset, railGroup, [
       ['.', 'haste_vacuo'],
-      ['.', 'SJ Cilindro MESTRE', 'Secundario'],
+      // ['.', 'SJ Cilindro MESTRE', 'Secundario'],
       ['.', 'SJ Cilindro MESTRE', 'secundaria.1'],
       ['.', 'bucha_vedada'],
       ['.', 'disco_dinamico'],
       ['.', 'mola11.1'],
       ['.', 'filtro_ar'],
     ])
-    // railGroup.getParameter('Highlighted').setValue(true)
+    // railGroup.getParameter('Highlighted').value = true
     railLocatorItem.addChild(railGroup)
   }
 
   {
     const locatorItem0 = new LocatorItem('locatorItem0')
-    const xfo0 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo0 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo0.tr.set(0.0, -0.144, 0.0)
-    locatorItem0.getParameter('GlobalXfo').setValue(xfo0)
-    locatorItem0.getParameter('Size').setValue(locatorSizeScale * 0.05)
-    locatorItem0.getParameter('Visible').setValue(locatorVisible)
+    locatorItem0.globalXfoParam.value = xfo0
+    locatorItem0.sizeParam.value = locatorSizeScale * 0.05
+    locatorItem0.visibleParam.value = locatorVisible
     railLocatorItem.addChild(locatorItem0)
 
     const secondaryPistonLocator = new LocatorItem('secondaryPistonLocator')
-    const xfo2_5 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo2_5 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo2_5.tr.set(0.0, -0.212, 0.0)
-    secondaryPistonLocator.getParameter('GlobalXfo').setValue(xfo2_5)
-    secondaryPistonLocator.getParameter('Size').setValue(locatorSizeScale * 0.05)
-    secondaryPistonLocator.getParameter('Visible').setValue(locatorVisible)
+    secondaryPistonLocator.globalXfoParam.value = xfo2_5
+    secondaryPistonLocator.sizeParam.value = locatorSizeScale * 0.05
+    secondaryPistonLocator.visibleParam.value = locatorVisible
     asset.addChild(secondaryPistonLocator)
 
     const locatorItem3 = new LocatorItem('locatorItem3')
-    const xfo3 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo3 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo3.tr.set(0.0, -0.288, 0.0)
-    locatorItem3.getParameter('GlobalXfo').setValue(xfo3)
-    locatorItem3.getParameter('Size').setValue(locatorSizeScale * 0.02)
-    locatorItem3.getParameter('Visible').setValue(locatorVisible)
+    locatorItem3.globalXfoParam.value = xfo3
+    locatorItem3.sizeParam.value = locatorSizeScale * 0.02
+    locatorItem3.visibleParam.value = locatorVisible
     asset.addChild(locatorItem3)
 
     const secondaryPistonOperator = new PistonOperator('secondaryPistonOperator')
-    secondaryPistonOperator.getInput('PistonXfo').setParam(locatorItem0.getParameter('GlobalXfo'))
-    secondaryPistonOperator.getInput('EndXfo').setParam(locatorItem3.getParameter('GlobalXfo'))
-    secondaryPistonOperator.getOutputByIndex(0).setParam(secondaryPistonLocator.getParameter('GlobalXfo'))
+    secondaryPistonOperator.getInput('PistonXfo').setParam(locatorItem0.globalXfoParam)
+    secondaryPistonOperator.getInput('EndXfo').setParam(locatorItem3.globalXfoParam)
+    secondaryPistonOperator.getOutputByIndex(0).setParam(secondaryPistonLocator.globalXfoParam)
     // asset.addChild(secondaryPistonOperator)
 
     const secondaryPistonGroup = new KinematicGroup('secondaryPistonGroup')
@@ -292,33 +292,33 @@ function setupSimulator(scene, asset, renderer, appData) {
       ['.', 'SJ Cilindro MESTRE', 'secundaria'],
       ['.', 'SJ Cilindro MESTRE', 'secundaria1'],
     ])
-    // secondaryPistonGroup.getParameter('Highlighted').setValue(true)
+    // secondaryPistonGroup.getParameter('Highlighted').value = true
     secondaryPistonLocator.addChild(secondaryPistonGroup)
 
     const locatorItem1 = new LocatorItem('locatorItem1')
-    const xfo1 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo1 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo1.tr.set(0.0, -0.186, 0.0)
-    locatorItem1.getParameter('GlobalXfo').setValue(xfo1)
-    locatorItem1.getParameter('Size').setValue(locatorSizeScale * 0.08)
-    locatorItem1.getParameter('Visible').setValue(locatorVisible)
+    locatorItem1.globalXfoParam.value = xfo1
+    locatorItem1.sizeParam.value = locatorSizeScale * 0.08
+    locatorItem1.visibleParam.value = locatorVisible
     secondaryPistonLocator.addChild(locatorItem1)
 
     const spring = asset.resolvePath(['.', 'SJ Cilindro MESTRE', 'mola1.1'])
     const locatorItem2 = new LocatorItem('locatorItem2')
     const xfo2 = new Xfo()
-    xfo2.ori = spring.getParameter('GlobalXfo').getValue().ori
+    xfo2.ori = spring.globalXfoParam.getValue().ori
     xfo2.tr.set(0.0, -0.232, 0.0)
-    locatorItem2.getParameter('GlobalXfo').setValue(xfo2)
-    locatorItem2.getParameter('Size').setValue(locatorSizeScale * 0.08)
-    locatorItem2.getParameter('Visible').setValue(locatorVisible)
+    locatorItem2.globalXfoParam.value = xfo2
+    locatorItem2.sizeParam.value = locatorSizeScale * 0.08
+    locatorItem2.visibleParam.value = locatorVisible
     secondaryPistonLocator.addChild(locatorItem2)
 
     {
       const aimOp = new AimOperator()
-      aimOp.getParameter('Stretch').setValue(1.0)
-      aimOp.getParameter('Axis').setValue(3)
-      aimOp.getInput('Target').setParam(locatorItem3.getParameter('GlobalXfo'))
-      aimOp.getOutputByIndex(0).setParam(locatorItem2.getParameter('GlobalXfo'))
+      aimOp.getParameter('Stretch').value = 1.0
+      aimOp.getParameter('Axis').value = 3
+      aimOp.getInput('Target').setParam(locatorItem3.globalXfoParam)
+      aimOp.getOutputByIndex(0).setParam(locatorItem2.globalXfoParam)
       // locatorItem2.addChild(aimOp)
       aimOp.resetStretchRefDist()
     }
@@ -332,10 +332,10 @@ function setupSimulator(scene, asset, renderer, appData) {
 
     {
       const aimOp = new AimOperator()
-      aimOp.getParameter('Stretch').setValue(1)
-      aimOp.getParameter('Axis').setValue(2)
-      aimOp.getInput('Target').setParam(locatorItem0.getParameter('GlobalXfo'))
-      aimOp.getOutputByIndex(0).setParam(locatorItem1.getParameter('GlobalXfo'))
+      aimOp.getParameter('Stretch').value = 1
+      aimOp.getParameter('Axis').value = 2
+      aimOp.getInput('Target').setParam(locatorItem0.globalXfoParam)
+      aimOp.getOutputByIndex(0).setParam(locatorItem1.globalXfoParam)
       // locatorItem1.addChild(aimOp)
       aimOp.resetStretchRefDist()
     }
@@ -350,32 +350,32 @@ function setupSimulator(scene, asset, renderer, appData) {
 
   {
     const boosterSpringLocator0 = new LocatorItem('boosterSpringLocator0')
-    const xfo0 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo0 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo0.tr.set(0, -0.112, 0.2)
-    boosterSpringLocator0.getParameter('GlobalXfo').setValue(xfo0)
-    boosterSpringLocator0.getParameter('Size').setValue(locatorSizeScale * 0.01)
-    boosterSpringLocator0.getParameter('Visible').setValue(locatorVisible)
+    boosterSpringLocator0.globalXfoParam.value = xfo0
+    boosterSpringLocator0.sizeParam.value = locatorSizeScale * 0.01
+    boosterSpringLocator0.visibleParam.value = locatorVisible
     asset.addChild(boosterSpringLocator0)
 
     const boosterSpringLocator1 = new LocatorItem('boosterSpringLocator1')
-    const xfo1 = railLocatorItem.getParameter('GlobalXfo').getValue().clone()
+    const xfo1 = railLocatorItem.globalXfoParam.getValue().clone()
     xfo1.tr.set(0, -0.045, 0.2)
-    boosterSpringLocator1.getParameter('GlobalXfo').setValue(xfo1)
-    boosterSpringLocator1.getParameter('Size').setValue(locatorSizeScale * 0.05)
-    boosterSpringLocator1.getParameter('Visible').setValue(locatorVisible)
+    boosterSpringLocator1.globalXfoParam.value = xfo1
+    boosterSpringLocator1.sizeParam.value = locatorSizeScale * 0.05
+    boosterSpringLocator1.visibleParam.value = locatorVisible
     railLocatorItem.addChild(boosterSpringLocator1)
 
     const aimOp = new AimOperator()
-    aimOp.getParameter('Stretch').setValue(1)
-    aimOp.getParameter('Axis').setValue(2)
-    aimOp.getInput('Target').setParam(boosterSpringLocator0.getParameter('GlobalXfo'))
-    aimOp.getOutputByIndex(0).setParam(boosterSpringLocator1.getParameter('GlobalXfo'))
+    aimOp.getParameter('Stretch').value = 1
+    aimOp.getParameter('Axis').value = 2
+    aimOp.getInput('Target').setParam(boosterSpringLocator0.globalXfoParam)
+    aimOp.getOutputByIndex(0).setParam(boosterSpringLocator1.globalXfoParam)
     aimOp.resetStretchRefDist()
     // boosterSpringLocator1.addChild(aimOp)
 
     const boosterSpringGroup = new KinematicGroup('boosterSpringGroup')
     boosterSpringLocator1.addChild(boosterSpringGroup, false)
-    // boosterSpringGroup.getParameter('InitialXfoMode').setValue(KinematicGroup.INITIAL_XFO_MODES.first)
+    boosterSpringGroup.initialXfoModeParam.value = KinematicGroup.INITIAL_XFO_MODES.first
     boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12.1']))
   }
 }

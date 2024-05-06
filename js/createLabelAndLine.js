@@ -24,8 +24,8 @@ function createLabelAndLine(labelData) {
     line.setNumVertices(2)
     line.setNumSegments(1)
     line.setSegmentVertexIndices(0, 0, 1)
-    line.getVertexAttribute('positions').getValueRef(0).setFromOther(new Vec3(0, 0, 0))
-    line.getVertexAttribute('positions').getValueRef(1).setFromOther(new Vec3(1, 0, 0))
+    line.getVertexAttribute('positions').setValue(0, new Vec3(0, 0, 0))
+    line.getVertexAttribute('positions').setValue(1, new Vec3(1, 0, 0))
     state.line = line
   }
   if (!state.ball) {

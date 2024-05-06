@@ -17,15 +17,15 @@ class LocatorItem extends GeomItem {
 
     super(name, cross, material)
 
-    const sizeParam = this.addParameter(new NumberParameter('Size', size))
+    this.sizeParam = this.addParameter(new NumberParameter('Size', size))
     const resize = () => {
-      const size = sizeParam.getValue()
+      const size = this.sizeParam.getValue()
       const geomOffsetXfoParam = this.getParameter('GeomOffsetXfo')
       const geomOffsetXfo = geomOffsetXfoParam.getValue()
       geomOffsetXfo.sc.set(size, size, size)
       geomOffsetXfoParam.setValue(geomOffsetXfo)
     }
-    sizeParam.on('valueChanged', resize)
+    this.sizeParam.on('valueChanged', resize)
     resize()
 
     this.addParameter(new BooleanParameter('PropagateVisibilityToChildren', false)).on('valueChanged', () => {

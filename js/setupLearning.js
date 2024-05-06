@@ -368,8 +368,8 @@ function setupLearning(scene, asset, renderer) {
     stage1State.addActivationAction(setCameraPositionAndTarget)
     setCameraPositionAndTarget.getParameter('Camera').setValue(renderer.getViewport().getCamera())
     setCameraPositionAndTarget.getParameter('InterpTime').setValue(1.0)
-    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3({ x: 0.57098, y: -0.02572, z: 0.10281 }))
-    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3({ x: 0.00207, y: -0.03195, z: 0.03585 }))
+    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3(0.57098, -0.02572, 0.10281))
+    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3(0.00207, -0.03195, 0.03585))
 
     const EnableLabels = new SetParameterValue()
     // stage1State.addActivationAction(EnableLabels)
@@ -433,8 +433,8 @@ function setupLearning(scene, asset, renderer) {
     stage2State.addActivationAction(setCameraPositionAndTarget)
     setCameraPositionAndTarget.getParameter('Camera').setValue(renderer.getViewport().getCamera())
     setCameraPositionAndTarget.getParameter('InterpTime').setValue(1.0)
-    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3({ x: 0.31458, y: -0.17705, z: 0.09557 }))
-    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3({ x: 0.00902, y: -0.16664, z: 0.07171 }))
+    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3(0.31458, -0.17705, 0.09557))
+    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3(0.00902, -0.16664, 0.07171))
 
     const EnableLabels = new SetParameterValue('EnableLabels')
     // stage2State.addActivationAction(EnableLabels)
@@ -496,8 +496,8 @@ function setupLearning(scene, asset, renderer) {
     stage3State.addActivationAction(setCameraPositionAndTarget)
     setCameraPositionAndTarget.getParameter('Camera').setValue(renderer.getViewport().getCamera())
     setCameraPositionAndTarget.getParameter('InterpTime').setValue(1.0)
-    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3({ x: 0.40108, y: 0.47376, z: 0.27948 }))
-    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3({ x: -0.03933, y: 0.07561, z: 0.01556 }))
+    setCameraPositionAndTarget.getParameter('CameraPos').setValue(new Vec3(0.40108, 0.47376, 0.27948))
+    setCameraPositionAndTarget.getParameter('CameraTarget').setValue(new Vec3(-0.03933, 0.07561, 0.01556))
 
     ///////////////////////////////
     // State Deactivation Actions

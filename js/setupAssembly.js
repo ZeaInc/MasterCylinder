@@ -3,7 +3,7 @@ const { Vec3, Color, Xfo, KinematicGroup, CuttingPlane, SelectionSet } = window.
 const { PlanarMovementHandle } = window.zeaUx
 import { resolveItems } from './resolveItems.js'
 
-const displayDebug = false
+const displayDebug = true
 function setupPlugAndSocket(
   asset,
   name,
@@ -18,13 +18,13 @@ function setupPlugAndSocket(
   parent
 ) {
   const socket = new SocketItem(name, displayDebug)
-  socket.getParameter('GlobalXfo').setValue(xfo)
-  socket.getParameter('Size').setValue(radius * 5)
-  socket.getParameter('Radius').setValue(radius)
-  socket.getParameter('SlideDist').setValue(slideDist)
-  if (plugLength > 0.0) socket.getParameter('AxialFlip').setValue(true)
+  socket.globalXfoParam.value = xfo
+  socket.getParameter('Size').value = radius * 5
+  socket.getParameter('Radius').value = radius
+  socket.getParameter('SlideDist').value = slideDist
+  if (plugLength > 0.0) socket.getParameter('AxialFlip').value = true
 
-  if (radialConstraint) socket.getParameter('RadialConstraint').setValue(radialConstraint)
+  if (radialConstraint) socket.getParameter('RadialConstraint').value = radialConstraint
 
   if (dependentSockets) {
     dependentSockets.forEach((dependentSocket) => {
@@ -36,10 +36,10 @@ function setupPlugAndSocket(
   else asset.addChild(socket)
 
   const plug = new PlugItem(name + 'Plug', displayDebug)
-  plug.getParameter('Size').setValue(radius * 5)
-  plug.getParameter('Length').setValue(plugLength)
+  plug.getParameter('Size').value = radius * 5
+  plug.getParameter('Length').value = plugLength
   const plugXfo = xfo.clone()
-  plug.getParameter('GlobalXfo').setValue(plugXfo)
+  plug.globalXfoParam.value = plugXfo
   if (geomItem) plug.addItem(geomItem)
   plug.sockets.push(socket)
   // asset.addChild(plug);
@@ -49,7 +49,7 @@ function setupPlugAndSocket(
   const handle = new PlanarMovementHandle()
   const handleXfo = xfo.clone()
   handleXfo.ori.setFromDirectionAndUpvector(dir, up)
-  handle.getParameter('LocalXfo').setValue(handleXfo)
+  handle.getParameter('LocalXfo').value = handleXfo
   handle.addChild(plug, true)
 
   // const handle = new ScreenSpaceMovementHandle();
@@ -68,13 +68,13 @@ function setupAssembly(scene, asset, renderer, appData) {
   //   const target = renderer.getViewport().getCamera().getTargetPostion()
   //   console.log(xfo.toString(), target.toString())
   // })
-  const position = new Vec3({ x: 0.91666, y: -0.05792, z: 0.12469 })
-  const target = new Vec3({ x: 0.02931, y: -0.12152, z: 0.04089 })
+  const position = new Vec3(0.91666, -0.05792, 0.12469)
+  const target = new Vec3(0.02931, -0.12152, 0.04089)
   renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 
   const boosterAndPedalGroup = new SelectionSet('boosterAndPedalGroup')
-  // boosterAndPedalGroup.getParameter('Highlighted').setValue(true);
-  boosterAndPedalGroup.getParameter('Visible').setValue(false)
+  // boosterAndPedalGroup.getParameter('Highlighted').value = true)
+  boosterAndPedalGroup.getParameter('Visible').value = false
   asset.addChild(boosterAndPedalGroup)
 
   // asset.on('loaded', () => {
@@ -112,7 +112,7 @@ function setupAssembly(scene, asset, renderer, appData) {
   // const applyCutaway = false
   // if (applyCutaway) {
   const cutAwayGroup = new CuttingPlane('cutAwayGroup')
-  // cutAwayGroup.cutPlaneParam.setValue(new Vec3(1, 0, 0, -0.2))
+  // cutAwayGroup.cutPlaneParam.value = new Vec3(1, 0, 0, -0.2)
   const xfo = new Xfo()
   xfo.ori.setFromAxisAndAngle(new Vec3(0, 1, 0), Math.PI * 0.5)
   cutAwayGroup.localXfoParam.value = xfo
@@ -131,8 +131,8 @@ function setupAssembly(scene, asset, renderer, appData) {
     // ['.', 'Symmetry of Part1.8.2'],
   ])
 
-  cutAwayGroup.cutAwayEnabledParam.setValue(false)
-  // asset.getParameter('CutPlaneDist').setValue(0.0)
+  cutAwayGroup.cutAwayEnabledParam.value = false
+  // asset.getParameter('CutPlaneDist').value = 0.0
   // }
 
   const plugs = {}
@@ -150,9 +150,9 @@ function setupAssembly(scene, asset, renderer, appData) {
       const up = new Vec3(0, 0, 1)
       const handle = new PlanarMovementHandle()
       const handleXfo = new Xfo()
-      handleXfo.tr = item.getParameter('GlobalXfo').getValue().tr
+      handleXfo.tr = item.globalXfoParam.value.tr
       handleXfo.ori.setFromDirectionAndUpvector(dir, up)
-      handle.getParameter('LocalXfo').setValue(handleXfo)
+      handle.getParameter('LocalXfo').value = handleXfo
       handle.addChild(masterCylinderGroup, true)
 
       asset.addChild(handle)
@@ -501,9 +501,9 @@ function setupAssembly(scene, asset, renderer, appData) {
       for (let key in plugs) {
         const p = plugs[key].plug
         if (p instanceof PlugItem) {
-          p.getParameter('HighlightColor').setValue(color)
-          p.getParameter('HighlightFill').setValue(color.a)
-          p.getParameter('Highlighted').setValue(true)
+          p.getParameter('HighlightColor').value = color
+          p.getParameter('HighlightFill').value = color.a
+          p.getParameter('Highlighted').value = true
         }
       }
       if (duration) {
@@ -511,7 +511,7 @@ function setupAssembly(scene, asset, renderer, appData) {
           for (let key in plugs) {
             const p = plugs[key].plug
             if (p instanceof PlugItem) {
-              p.getParameter('Highlighted').setValue(false)
+              p.getParameter('Highlighted').value = false
             }
           }
         }, duration)
@@ -519,13 +519,13 @@ function setupAssembly(scene, asset, renderer, appData) {
     }
     // hilightAllPlugs(1000);
     const applyCutaway = (delay) => {
-      cutAwayGroup.cutAwayEnabledParam.setValue(true)
+      cutAwayGroup.cutAwayEnabledParam.value = true
       // const cutDist = cutAwayGroup.getParameter('CutPlaneDist')
       // let cutAmount = -0.2
-      // cutDist.setValue(cutAmount)
+      // cutDist.value = cutAmount
       // const timerCallback = () => {
       //   cutAmount += 0.002
-      //   cutDist.setValue(cutAmount)
+      //   cutDist.value = cutAmount
       //   if (cutAmount < 0.0) {
       //     setTimeout(timerCallback, 20) // Sample at 50fps.
       //   }
@@ -536,10 +536,10 @@ function setupAssembly(scene, asset, renderer, appData) {
     let plugCout = 0
     for (let key in plugs) {
       const p = plugs[key].plug
-      const plugXfo = p.getParameter('GlobalXfo').getValue()
-      plugXfo.tr = plugsPositions[index]
-      plugXfo.tr.y *= 2
-      p.getParameter('GlobalXfo').setValue(plugXfo)
+      // const plugXfo = p.globalXfoParam.value
+      // plugXfo.tr = plugsPositions[index]
+      // plugXfo.tr.y *= 2
+      // p.globalXfoParam.value = plugXfo
       if (p instanceof PlugItem) {
         p.state = PlugMode.UNCONNECTED
         plugs[key].socket.on('plugged', () => {

@@ -166,7 +166,7 @@ function loadAsset() {
       ['.', 'SJ Cilindro MESTRE', 'secundaria'], // Floating Ram end seal
       ['.', 'SJ Cilindro MESTRE', 'secundaria.1'], // Ram end Seal
       ['.', 'SJ Cilindro MESTRE', 'primario'], // Rubber seals to top reservoir
-      ['.', 'SJ Cilindro MESTRE', 'secundario'], // Rubber seals to top reservoir
+      ['.', 'SJ Cilindro MESTRE', 'secundario', 'primario'], // Rubber seals to top reservoir
       ['.', 'SJ Cilindro MESTRE', 'Part1.11'],
       ['.', 'filtro_ar'],
       ['.', 'SJ Cilindro MESTRE', 'Anel Trava'], // Booster seal
@@ -206,7 +206,7 @@ function loadAsset() {
       ['.', 'Symmetry of Part1.8.2'],
       ['.', 'Symmetry of Symmetry of Part1.8.1.1'],
       ['.', 'SJ Cilindro MESTRE', 'primario1'],
-      ['.', 'SJ Cilindro MESTRE', 'Secundario'],
+      ['.', 'SJ Cilindro MESTRE', 'Secundario01'],
       ['.', 'haste_acionamento'],
       ['.', 'haste_vacuo'],
       ['.', 'SJ Cilindro MESTRE', 'Part1.9'],

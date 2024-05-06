@@ -43,8 +43,8 @@ if (language) {
 labelManager.loadLibrary('servo_mestre.xlsx', 'data/servo_mestre.xlsx')
 
 const camera = renderer.getViewport().getCamera()
-const position = new Vec3({ x: 0.86471, y: 0.87384, z: 0.18464 })
-const target = new Vec3({ x: 0, y: 0.00913, z: -0.03154 })
+const position = new Vec3(0.86471, 0.87384, 0.18464)
+const target = new Vec3(0, 0.00913, -0.03154)
 camera.setPositionAndTarget(position, target)
 renderer.getViewport().backgroundColorParam.setValue(new Color(0.8, 0.8, 0.8))
 
@@ -75,9 +75,6 @@ import setupAssembly from './setupAssembly.js'
 
 asset.once('loaded', () => {
   renderer.frameAll()
-  // const xfo = renderer.getViewport().getCamera().getGlobalXfo()
-  // const target = renderer.getViewport().getCamera().getTargetPostion()
-  // console.log(xfo.toString(), target.toString())
 
   ////////////////////////////////////////////////////////////////
   // States
@@ -104,6 +101,7 @@ asset.once('loaded', () => {
     }
   }
 })
+
 // if (document.location.hostname == 'localhost') {
 //   let currSel
 //   const togglePreProc = (name) => {
@@ -172,10 +170,13 @@ asset.once('loaded', () => {
 //         break
 //     }
 //   })
-renderer.getViewport().on('pointerDownOnGeom', (event) => {
-  const intersectionData = event.intersectionData
-  const geomItem = intersectionData.geomItem
-  console.log(geomItem.getPath())
+renderer.getViewport().on('pointerDown', (event) => {
+  if (event.intersectionData) {
+    const intersectionData = event.intersectionData
+    const geomItem = intersectionData.geomItem
+    console.log(geomItem.getPath())
+    event.stopPropagation()
+  }
   // if (!event.shiftKey && !event.altKey) {
   //   if (geomItem.getSelected()) {
   //     geomItem.traverse((item) => item.setSelected(false))

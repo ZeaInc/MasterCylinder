@@ -228,8 +228,8 @@ function setupIdentification(scene, asset, renderer, appData) {
   //   const target = renderer.getViewport().getCamera().getTargetPostion()
   //   console.log(xfo.toString(), target.toString())
   // })
-  const position = new Vec3({ x: 0.50854, y: 0.13737, z: 0.10604 })
-  const target = new Vec3({ x: 0.02116, y: 0.05867, z: 0.15426 })
+  const position = new Vec3(0.50854, 0.13737, 0.10604)
+  const target = new Vec3(0.02116, 0.05867, 0.15426)
   renderer.getViewport().getCamera().setPositionAndTarget(position, target)
 }
 
