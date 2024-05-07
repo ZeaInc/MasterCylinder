@@ -200,8 +200,6 @@ function setupSimulator(scene, asset, renderer, appData) {
     pedalGroup.addItem(asset.resolvePath(['.', 'Pedal_de freio.1']))
     locatorItem.addChild(pedalGroup)
   }
-  // return;
-
   const pushRodLocatorItem = new LocatorItem('pushRodLocatorItem')
   {
     const xfo = new Xfo()
@@ -218,8 +216,8 @@ function setupSimulator(scene, asset, renderer, appData) {
     // pushRodLocatorItem.addChild(aimOp)
 
     const pushRodGroup = new KinematicGroup('pushRodGroup')
-    pushRodLocatorItem.addChild(pushRodGroup)
     pushRodGroup.addItem(asset.resolvePath(['.', 'haste_acionamento']))
+    pushRodLocatorItem.addChild(pushRodGroup)
   }
 
   const railLocatorItem = new LocatorItem('railLocatorItem', 0.3, new Color(1, 0, 0))
@@ -375,7 +373,7 @@ function setupSimulator(scene, asset, renderer, appData) {
 
     const boosterSpringGroup = new KinematicGroup('boosterSpringGroup')
     boosterSpringLocator1.addChild(boosterSpringGroup, false)
-    boosterSpringGroup.initialXfoModeParam.value = KinematicGroup.INITIAL_XFO_MODES.first
+    // boosterSpringGroup.initialXfoModeParam.value = KinematicGroup.INITIAL_XFO_MODES.first
     boosterSpringGroup.addItem(asset.resolvePath(['.', 'mola12.1']))
   }
 }
